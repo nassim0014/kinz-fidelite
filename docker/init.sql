@@ -1,0 +1,1 @@
+CREATE DATABASE kinz_test;
