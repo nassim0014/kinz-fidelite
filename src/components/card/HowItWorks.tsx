@@ -22,8 +22,8 @@ export function HowItWorks() {
         <div>
           <dt className="font-bold text-forest">Les récompenses</dt>
           <dd className="mt-1 text-muted">
-            Elles tombent sur les nombres premiers : 3, 5, 7, 11 et 13 tampons. Utilisez-en une tout
-            de suite, ou attendez la suivante, plus généreuse.
+            Sur la carte, à 3, 5, 7, 11 et 13 tampons. Utilisez-en une tout de suite, ou attendez la
+            suivante, plus généreuse. D’autres vous attendent au fil des niveaux.
           </dd>
         </div>
         <div>
@@ -37,8 +37,7 @@ export function HowItWorks() {
         <div>
           <dt className="font-bold text-forest">Les multiplicateurs</dt>
           <dd className="mt-1 text-muted">
-            Aux niveaux 13, 21 et 34, trois nombres de la suite de Fibonacci, vos pépins sont
-            multipliés par 2, 3 puis 5.
+            Aux niveaux 13, 21 et 34, vos pépins sont multipliés par 2, 3 puis 5.
           </dd>
         </div>
       </dl>

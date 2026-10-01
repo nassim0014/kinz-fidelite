@@ -128,6 +128,7 @@ export const PERKS: readonly Perk[] = [
   { level: 13, label: 'Pépins ×2, vous devenez Fleur', kind: 'auto' },
   { level: 17, label: 'Votre carte redémarre à 1 tampon', kind: 'auto' },
   { level: 19, label: 'Tampons doublés le jour de votre anniversaire', kind: 'auto' },
+  { level: 21, label: 'Pépins ×3, vous devenez Figue', kind: 'auto' },
   { level: 23, label: 'Votre carte redémarre à 2 tampons', kind: 'auto' },
   { level: 29, label: 'Livraison offerte sur kinzoils.com', kind: 'ongoing' },
   { level: 31, label: 'Votez pour le prochain produit', kind: 'ongoing' },

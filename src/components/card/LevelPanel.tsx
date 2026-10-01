@@ -48,11 +48,6 @@ export function LevelPanel({ view }: { view: CardView }) {
           {lifetimePepins} pépins au total. Niveau maximal atteint : vous êtes une Légende.
         </p>
       )}
-      {isGolden(level) && (
-        <p className="mt-1 text-xs text-muted">
-          Un niveau d’or est à la fois un nombre premier et un nombre de Fibonacci.
-        </p>
-      )}
     </section>
   );
 }
