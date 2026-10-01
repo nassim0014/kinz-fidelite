@@ -10,3 +10,7 @@ coverage/
 playwright-report/
 test-results/
 .vercel
+
+# Store PC
+!.env.store.example
+backups/

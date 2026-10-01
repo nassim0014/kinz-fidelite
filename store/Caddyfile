@@ -1,0 +1,20 @@
+{
+	# Customers browse plain http on the shop Wi-Fi: never push them to https.
+	auto_https disable_redirects
+	skip_install_trust
+	# Phones send no server name when opening https://<IP>: use the store address.
+	default_sni {$STORE_HOST}
+}
+
+# Customer pages: plain http, no certificate warning. Staff and admin jump to https.
+http:// {
+	@equipe path /staff /staff/* /admin /admin/* /api/auth/* /api/staff/* /api/admin/*
+	redir @equipe https://{host}{uri} 302
+	reverse_proxy app:3000
+}
+
+# Staff and admin: https with a certificate made by this PC (accept the warning once per phone).
+https://{$STORE_HOST}, https://localhost {
+	tls internal
+	reverse_proxy app:3000
+}
