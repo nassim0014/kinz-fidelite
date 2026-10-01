@@ -42,6 +42,16 @@ test('un client rejoint, est tamponné une seule fois par jour, et voit sa carte
   await expect(staff.getByRole('status')).toHaveText('+1 tampon · +2 pépins · Niveau 2 atteint !');
   await expect(staff.getByText("Déjà tamponné aujourd'hui")).toBeVisible();
 
+  await staff.getByRole('button', { name: 'Renvoyer la carte' }).click();
+  await expect(staff.getByRole('link', { name: 'Envoyer par WhatsApp' })).toHaveAttribute(
+    'href',
+    /^https:\/\/wa\.me\/21622123456\?text=.*%2Fc%2F/,
+  );
+  await expect(staff.getByRole('link', { name: 'Envoyer par SMS' })).toHaveAttribute(
+    'href',
+    /^sms:\+21622123456\?body=/,
+  );
+
   await page.reload();
   await expect(page.getByText('1 / 13')).toBeVisible();
   await expect(page.getByText('Niveau 2')).toBeVisible();

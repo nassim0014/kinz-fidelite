@@ -18,6 +18,7 @@ export function CustomerPanel({ view, busy, onStamp, onRedeem, onPerk, onNext }:
   const [amount, setAmount] = useState('');
   const [confirmBig, setConfirmBig] = useState(false);
   const [pendingStop, setPendingStop] = useState<number | null>(null);
+  const [showResend, setShowResend] = useState(false);
   const parsed = parseAmount(amount);
   const { card } = view;
   const reached = card.stops.filter((s) => s.reached);
@@ -33,6 +34,9 @@ export function CustomerPanel({ view, busy, onStamp, onRedeem, onPerk, onNext }:
     if (await onStamp(amount)) setAmount('');
   }
 
+  const resendMessage = showResend
+    ? encodeURIComponent(`Votre carte de fidélité KINZ : ${window.location.origin}/c/${card.token}`)
+    : '';
   const btn = 'rounded-full px-5 py-3 font-bold disabled:opacity-50';
   return (
     <div className="space-y-4">
@@ -137,6 +141,31 @@ export function CustomerPanel({ view, busy, onStamp, onRedeem, onPerk, onNext }:
           ))}
         </section>
       )}
+
+      <section className="space-y-2 rounded-2xl bg-white p-4">
+        {showResend ? (
+          <div className="flex flex-wrap gap-2">
+            <a
+              href={`https://wa.me/${view.phone.replace(/\D/g, '')}?text=${resendMessage}`}
+              target="_blank"
+              rel="noreferrer"
+              className={`${btn} border-2 border-olive-900`}
+            >
+              Envoyer par WhatsApp
+            </a>
+            <a
+              href={`sms:${view.phone}?body=${resendMessage}`}
+              className={`${btn} border-2 border-olive-900`}
+            >
+              Envoyer par SMS
+            </a>
+          </div>
+        ) : (
+          <button onClick={() => setShowResend(true)} className={`${btn} w-full bg-sand`}>
+            Renvoyer la carte
+          </button>
+        )}
+      </section>
 
       <button onClick={onNext} className={`${btn} w-full bg-sand`}>
         Client suivant

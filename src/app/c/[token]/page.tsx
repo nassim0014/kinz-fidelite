@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { AddressForm } from '@/components/card/AddressForm';
 import { AutoRefresh } from '@/components/card/AutoRefresh';
@@ -8,11 +9,23 @@ import { StampTrack } from '@/components/card/StampTrack';
 import { getDb } from '@/db/client';
 import { env } from '@/lib/env';
 import { qrSvg } from '@/lib/qr';
+import { isCardToken } from '@/lib/token';
 import { buildCardView } from '@/lib/views';
 import { getCustomerByToken } from '@/server/customers';
 
 export const dynamic = 'force-dynamic';
-export const metadata = { title: 'Ma carte' };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ token: string }>;
+}): Promise<Metadata> {
+  const { token } = await params;
+  return {
+    title: 'Ma carte',
+    ...(isCardToken(token) ? { manifest: `/c/${token}/manifest.webmanifest` } : {}),
+  };
+}
 
 export default async function CardPage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
