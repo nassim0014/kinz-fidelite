@@ -21,7 +21,7 @@ Spécification complète : [`docs/superpowers/specs/2026-09-30-kinz-fidelite-des
   - 7 → −50 % sur 2 produits
   - 11 → 1 produit offert + 11 pépins
   - 13 → 1 produit offert + −50 % sur un 2e + 13 pépins
-  - Utiliser un palier remet la carte à zéro. Produits à l'unité uniquement ; produit offert ≤ 49 TND.
+  - Utiliser un palier remet la carte à zéro (à 1 dès le niveau 17, à 2 dès le niveau 23). Produits à l'unité uniquement ; produit offert ≤ 49 TND.
 - **Pépins** : 1 pépin par tranche de 40 TND. Passer du niveau n au niveau n+1 coûte n pépins (niveau 50 = 1 225 pépins).
 - **Multiplicateurs (Fibonacci)** : ×2 dès le niveau 13, ×3 dès le 21, ×5 dès le 34.
 - **Avantages** : aux niveaux premiers (2, 3, 5, 7, 11, 13, 17…), avec des niveaux d'or (premiers _et_ Fibonacci : 2, 3, 5, 13). Au niveau 34, les nouveautés sont livrées gratuitement en avant-première. Au niveau 50 : Légende — Le Figuier d'Or.
@@ -54,11 +54,12 @@ La CI GitHub lance tout à chaque pull request.
 ## Déploiement (Vercel + Neon)
 
 1. Vercel → _Add New Project_ → importer `nassim0014/kinz-fidelite`.
-2. _Storage_ → _Neon Postgres_ (Marketplace) → lier au projet. `DATABASE_URL` est ajouté automatiquement, avec une base de prévisualisation par pull request.
-3. _Settings → Environment Variables_ :
-   - `SESSION_SECRET` : générer avec `openssl rand -base64 48`.
-   - `APP_URL` : l'URL de production (ex. `https://fidelite.kinzoils.com`).
-4. Déployer. Les migrations s'exécutent automatiquement avant chaque build (`vercel.json`).
+2. _Storage_ → _Neon Postgres_ (Marketplace) → lier au projet. Utiliser l'URL **poolée** de Neon (hôte `-pooler`). Les prévisualisations utilisent leur propre base (branches Neon créées par l'intégration).
+3. _Settings → Environment Variables_ : définir chaque variable par environnement, sans partager de secret entre Production et Preview.
+   - **Production uniquement** : `DATABASE_URL` (base de production), `SESSION_SECRET` (générer avec `openssl rand -base64 48`), `APP_URL` (l'URL de production, ex. `https://fidelite.kinzoils.com`).
+   - **Preview** : sa propre `DATABASE_URL` (base séparée, jamais celle de production), son propre `SESSION_SECRET` et son propre `APP_URL`.
+   - `ALLOW_PREVIEW_MIGRATIONS=1` : à définir **uniquement dans l'environnement Preview**, et seulement une fois confirmé que la base de prévisualisation est bien séparée de la production.
+4. Déployer. Les migrations (`vercel.json` → `npm run db:migrate`) s'exécutent avant chaque build, mais seulement en Production (ou en Preview si `ALLOW_PREVIEW_MIGRATIONS=1`) ; sinon elles sont ignorées avec un message dans les logs. Un verrou PostgreSQL évite que deux builds simultanés migrent en même temps. Comme les migrations passent avant que la nouvelle version soit en ligne, elles doivent rester rétrocompatibles (_expand/contract_) : ajouter avant de retirer, jamais de suppression ou renommage brutal.
 5. Créer le premier compte propriétaire sur la base de production :
    ```bash
    vercel env pull .env.production.local --environment=production
