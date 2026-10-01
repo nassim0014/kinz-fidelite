@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { KinzLogo } from '@/components/brand/KinzLogo';
+import { RoadmapStrip } from '@/components/roadmap/RoadmapStrip';
 import { env } from '@/lib/env';
 import { qrSvg } from '@/lib/qr';
 import { getPageSession } from '@/server/page-session';
@@ -21,6 +22,7 @@ export default async function PosterPage() {
         <li>Des récompenses à 2, 3, 5, 7, 11, 13… à vous de deviner la suite</li>
         <li>50 niveaux, et des pépins qui se multiplient en chemin</li>
       </ul>
+      <RoadmapStrip className="mt-2 w-full" />
       <p className="no-print mt-4 text-sm text-muted">Pour imprimer : Ctrl/Cmd + P</p>
     </main>
   );

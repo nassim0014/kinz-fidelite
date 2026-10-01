@@ -35,6 +35,7 @@ export default async function AdminPage() {
         <nav className="flex flex-wrap gap-4 text-sm underline">
           <Link href="/staff">Comptoir</Link>
           <Link href="/admin/affiche">Affiche QR</Link>
+          <Link href="/admin/parcours">Affiche du parcours (A3)</Link>
           <a href="/api/admin/export?type=customers">Export clients (CSV)</a>
           <a href="/api/admin/export?type=events">Export journal (CSV)</a>
         </nav>

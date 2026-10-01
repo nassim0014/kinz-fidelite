@@ -38,6 +38,26 @@
   }
 }
 
+/* The A3 shop poster prints on its own named page, so other pages keep the default size. */
+@page a3 {
+  size: A3 portrait;
+  margin: 0;
+}
+
+.sheet-a3 {
+  page: a3;
+  width: 297mm;
+  height: 420mm;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+@media screen {
+  .sheet-a3 {
+    box-shadow: 0 20px 60px -30px rgb(32 65 30 / 0.5);
+  }
+}
+
 @media print {
   .no-print {
     display: none !important;

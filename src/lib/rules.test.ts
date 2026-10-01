@@ -148,6 +148,8 @@ describe('perks', () => {
     expect(nextPerk(50)).toBeNull();
   });
   it('flags the automatic perks', () => {
-    expect(PERKS.filter((p) => p.kind === 'auto').map((p) => p.level)).toEqual([13, 17, 19, 23]);
+    expect(PERKS.filter((p) => p.kind === 'auto').map((p) => p.level)).toEqual([
+      13, 17, 19, 21, 23,
+    ]);
   });
 });

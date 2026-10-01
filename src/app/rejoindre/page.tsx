@@ -1,12 +1,12 @@
 import { KinzLogo } from '@/components/brand/KinzLogo';
 import { JoinForm } from '@/components/card/JoinForm';
+import { RoadmapStrip } from '@/components/roadmap/RoadmapStrip';
 
 export const metadata = { title: 'Rejoindre' };
 
 const PROMISES = [
   'Un tampon à chaque visite, dès 40 TND d’achat',
   'Des récompenses à 2, 3, 5, 7, 11, 13… à vous de deviner la suite',
-  '50 niveaux, et des pépins qui se multiplient en chemin',
 ];
 
 export default function JoinPage() {
@@ -27,7 +27,13 @@ export default function JoinPage() {
           </li>
         ))}
       </ul>
-      <div className="mt-8 rounded-3xl bg-white p-5">
+      <section aria-labelledby="parcours" className="mt-6">
+        <h2 id="parcours" className="text-[0.95rem]">
+          50 niveaux, et des pépins qui se multiplient en chemin :
+        </h2>
+        <RoadmapStrip className="mt-2 -mx-1" />
+      </section>
+      <div className="mt-7 rounded-3xl bg-white p-5">
         <JoinForm />
       </div>
     </main>
