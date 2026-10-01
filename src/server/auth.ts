@@ -66,16 +66,22 @@ export async function login(
   const ok = await bcrypt.compare(input.pin, member?.pinHash ?? DUMMY_HASH);
 
   if (!member || !ok) {
-    const failures = (attempt?.failures ?? 0) + 1;
-    const locked = failures >= MAX_FAILURES;
-    const values = {
-      failures: locked ? 0 : failures,
-      lockedUntil: locked ? new Date(now.getTime() + LOCK_MS) : null,
-    };
-    await db
+    // Atomic increment: parallel guesses cannot all observe the same counter.
+    const [row] = await db
       .insert(pinAttempts)
-      .values({ key, ...values })
-      .onConflictDoUpdate({ target: pinAttempts.key, set: values });
+      .values({ key, failures: 1 })
+      .onConflictDoUpdate({
+        target: pinAttempts.key,
+        set: { failures: sql`${pinAttempts.failures} + 1` },
+      })
+      .returning({ failures: pinAttempts.failures });
+    const locked = (row?.failures ?? 0) >= MAX_FAILURES;
+    if (locked) {
+      await db
+        .update(pinAttempts)
+        .set({ failures: 0, lockedUntil: new Date(now.getTime() + LOCK_MS) })
+        .where(eq(pinAttempts.key, key));
+    }
     throw new AppError(locked ? 'LOCKED' : 'INVALID_CREDENTIALS');
   }
 

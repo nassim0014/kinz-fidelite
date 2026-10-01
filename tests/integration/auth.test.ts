@@ -53,6 +53,16 @@ describe('login', () => {
     ).resolves.toMatchObject({ name: 'Amel' });
   });
 
+  it('counts parallel wrong guesses atomically and locks', async () => {
+    await createStaff(testDb, { name: 'Amel', pin: '123456', role: 'staff' });
+    await Promise.allSettled(
+      Array.from({ length: 10 }, () => login(testDb, { name: 'Amel', pin: '000000', now: T0 })),
+    );
+    await expect(login(testDb, { name: 'Amel', pin: '123456', now: T0 })).rejects.toMatchObject({
+      code: 'LOCKED',
+    });
+  });
+
   it('gives the same error for an unknown name and refuses deactivated staff', async () => {
     const s = await createStaff(testDb, { name: 'Amel', pin: '123456', role: 'staff' });
     const o = await createStaff(testDb, { name: 'Nassim', pin: '123456', role: 'owner' });
