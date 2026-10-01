@@ -11,7 +11,15 @@ const QrScanner = dynamic(() => import('./QrScanner').then((m) => m.QrScanner), 
 
 type Msg = { kind: 'ok' | 'warn' | 'error'; text: string } | null;
 
-export function StaffConsole({ staffName, isOwner }: { staffName: string; isOwner: boolean }) {
+export function StaffConsole({
+  staffName,
+  isOwner,
+  appUrl,
+}: {
+  staffName: string;
+  isOwner: boolean;
+  appUrl: string;
+}) {
   const [view, setView] = useState<StaffCustomerView | null>(null);
   const [msg, setMsg] = useState<Msg>(null);
   const [busy, setBusy] = useState(false);
@@ -134,6 +142,7 @@ export function StaffConsole({ staffName, isOwner }: { staffName: string; isOwne
 
       {view ? (
         <CustomerPanel
+          appUrl={appUrl}
           view={view}
           busy={busy}
           onStamp={onStamp}

@@ -98,3 +98,35 @@ describe('session tokens', () => {
     expect(await readSessionToken(undefined, SECRET)).toBeNull();
   });
 });
+
+describe('lockout is per device, so an outsider cannot lock staff out', () => {
+  it('locks the device that guessed wrong but not the staff member on another device', async () => {
+    await createStaff(testDb, { name: 'Amel', pin: '123456', role: 'staff' });
+    for (let i = 0; i < 4; i++) {
+      await expect(
+        login(testDb, { name: 'Amel', pin: '000000', client: '203.0.113.9', now: T0 }),
+      ).rejects.toMatchObject({ code: 'INVALID_CREDENTIALS' });
+    }
+    await expect(
+      login(testDb, { name: 'Amel', pin: '000000', client: '203.0.113.9', now: T0 }),
+    ).rejects.toMatchObject({ code: 'LOCKED' });
+    await expect(
+      login(testDb, { name: 'Amel', pin: '123456', client: '203.0.113.9', now: T0 }),
+    ).rejects.toMatchObject({ code: 'LOCKED' });
+    await expect(
+      login(testDb, { name: 'Amel', pin: '123456', client: '192.168.1.20', now: T0 }),
+    ).resolves.toMatchObject({ name: 'Amel' });
+  });
+});
+
+describe('createStaff under concurrency', () => {
+  it('answers NAME_TAKEN (never a raw database error) when the same name is added twice at once', async () => {
+    const results = await Promise.allSettled([
+      createStaff(testDb, { name: 'Sami', pin: '111111', role: 'staff' }),
+      createStaff(testDb, { name: 'Sami', pin: '222222', role: 'staff' }),
+    ]);
+    expect(results.filter((r) => r.status === 'fulfilled')).toHaveLength(1);
+    const rejected = results.find((r) => r.status === 'rejected') as PromiseRejectedResult;
+    expect(rejected.reason.code).toBe('NAME_TAKEN');
+  });
+});

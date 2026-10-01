@@ -6,6 +6,8 @@ import { parseAmount } from '@/lib/amount';
 import type { StaffCustomerView } from '@/lib/views';
 
 interface Props {
+  /** Canonical public address (APP_URL) used in links sent to customers. */
+  appUrl: string;
   view: StaffCustomerView;
   busy: boolean;
   onStamp: (amount: string) => Promise<boolean>;
@@ -14,7 +16,7 @@ interface Props {
   onNext: () => void;
 }
 
-export function CustomerPanel({ view, busy, onStamp, onRedeem, onPerk, onNext }: Props) {
+export function CustomerPanel({ appUrl, view, busy, onStamp, onRedeem, onPerk, onNext }: Props) {
   const [amount, setAmount] = useState('');
   const [confirmBig, setConfirmBig] = useState(false);
   const [pendingStop, setPendingStop] = useState<number | null>(null);
@@ -35,7 +37,7 @@ export function CustomerPanel({ view, busy, onStamp, onRedeem, onPerk, onNext }:
   }
 
   const resendMessage = showResend
-    ? encodeURIComponent(`Votre carte de fidélité KINZ : ${window.location.origin}/c/${card.token}`)
+    ? encodeURIComponent(`Votre carte de fidélité KINZ : ${appUrl}/c/${card.token}`)
     : '';
   const btn = 'rounded-full px-5 py-3 font-bold disabled:opacity-50';
   return (

@@ -50,11 +50,12 @@ export async function readSessionToken(
 
 export async function login(
   db: Db,
-  input: { name: string; pin: string; now?: Date },
+  input: { name: string; pin: string; client?: string; now?: Date },
 ): Promise<Session> {
   const now = input.now ?? new Date();
   const name = input.name.trim().toLowerCase();
-  const key = `staff:${name}`;
+  // Lockout is per staff name AND device (see clientKeyFrom), capped to keep keys bounded.
+  const key = `staff:${name.slice(0, 60)}@${(input.client ?? 'direct').slice(0, 64)}`;
 
   const [attempt] = await db.select().from(pinAttempts).where(eq(pinAttempts.key, key));
   if (attempt?.lockedUntil && attempt.lockedUntil > now) throw new AppError('LOCKED');

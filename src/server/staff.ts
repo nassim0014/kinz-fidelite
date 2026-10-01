@@ -2,7 +2,7 @@ import { eq, sql } from 'drizzle-orm';
 import type { Db } from '@/db';
 import { staff } from '@/db/schema';
 import { hashPin, isValidPin } from './auth';
-import { AppError } from './errors';
+import { AppError, isUniqueViolation } from './errors';
 
 export interface StaffRow {
   id: string;
@@ -35,11 +35,17 @@ export async function createStaff(
     .from(staff)
     .where(sql`lower(${staff.name}) = ${name.toLowerCase()}`);
   if (clash) throw new AppError('NAME_TAKEN');
-  const [row] = await db
-    .insert(staff)
-    .values({ name, role: input.role, pinHash: await hashPin(input.pin) })
-    .returning(columns);
-  return row!;
+  try {
+    const [row] = await db
+      .insert(staff)
+      .values({ name, role: input.role, pinHash: await hashPin(input.pin) })
+      .returning(columns);
+    return row!;
+  } catch (e) {
+    // Two simultaneous "Ajouter" clicks both pass the check above; the unique index decides.
+    if (isUniqueViolation(e)) throw new AppError('NAME_TAKEN');
+    throw e;
+  }
 }
 
 export async function updateStaff(
