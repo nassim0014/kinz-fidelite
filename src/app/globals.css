@@ -1,0 +1,20 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-olive-900: #4a5530;
+  --color-olive-700: #6a7b4d;
+  --color-sand: #f5f0e6;
+  --color-ink: #1a1a1a;
+  --color-gold: #c9a961;
+  --color-gold-pale: #f0e3c0;
+  --color-bronze: #7a6320;
+  --color-muted: #4a4a4a;
+  --font-display: var(--font-playfair), Georgia, serif;
+  --font-sans: var(--font-lato), system-ui, sans-serif;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
