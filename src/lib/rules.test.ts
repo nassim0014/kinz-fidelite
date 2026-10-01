@@ -108,7 +108,7 @@ describe('pépins and levels', () => {
       'Figue',
       'Figuier',
       'Figuier',
-      "Légende — Le Figuier d'Or",
+      'Légende du Figuier d’Or',
     ]);
   });
 });

@@ -33,7 +33,7 @@ export function LoginForm() {
     }
   }
 
-  const input = 'w-full rounded-lg border border-olive-700/40 bg-white p-3';
+  const input = 'w-full rounded-lg border border-olive/40 bg-white p-3';
   return (
     <form onSubmit={submit} className="space-y-4">
       <div>
@@ -73,7 +73,7 @@ export function LoginForm() {
       )}
       <button
         disabled={busy}
-        className="w-full rounded-full bg-olive-900 py-3 font-bold text-white disabled:opacity-50"
+        className="w-full rounded-full bg-forest py-3 font-bold text-white disabled:opacity-50"
       >
         Se connecter
       </button>

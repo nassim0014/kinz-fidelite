@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from 'next';
-import { Lato, Playfair_Display } from 'next/font/google';
+import { Figtree, Marcellus } from 'next/font/google';
 import './globals.css';
 
-const lato = Lato({ subsets: ['latin'], weight: ['400', '700'], variable: '--font-lato' });
-const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' });
+const figtree = Figtree({ subsets: ['latin'], variable: '--font-figtree' });
+const marcellus = Marcellus({ subsets: ['latin'], weight: '400', variable: '--font-marcellus' });
 
 export const metadata: Metadata = {
   title: { default: 'KINZ Fidélité', template: '%s · KINZ Fidélité' },
@@ -12,12 +12,12 @@ export const metadata: Metadata = {
   icons: { apple: '/apple-touch-icon.png' },
 };
 
-export const viewport: Viewport = { themeColor: '#4A5530', width: 'device-width', initialScale: 1 };
+export const viewport: Viewport = { themeColor: '#20411E', width: 'device-width', initialScale: 1 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${lato.variable} ${playfair.variable}`}>
-      <body className="min-h-dvh bg-sand font-sans text-ink antialiased">{children}</body>
+    <html lang="fr" className={`${figtree.variable} ${marcellus.variable}`}>
+      <body className="min-h-dvh bg-paper font-sans text-ink antialiased">{children}</body>
     </html>
   );
 }

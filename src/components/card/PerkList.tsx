@@ -2,23 +2,33 @@ import type { CardView } from '@/lib/views';
 
 export function PerkList({ view }: { view: CardView }) {
   return (
-    <section className="rounded-2xl bg-white p-4 shadow-sm">
-      <h2 className="font-display text-xl">Mes avantages</h2>
+    <section aria-labelledby="perks-title" className="rounded-3xl bg-white p-5">
+      <h2 id="perks-title" className="font-display text-2xl text-forest">
+        Mes avantages
+      </h2>
       {view.perks.length === 0 ? (
-        <p className="mt-2 text-sm text-muted">Votre premier avantage arrive au niveau 2.</p>
+        <p className="mt-2 text-sm text-muted">
+          Votre premier avantage, un échantillon de bienvenue, arrive au prochain niveau.
+        </p>
       ) : (
-        <ul className="mt-2 space-y-1 text-sm">
+        <ul className="mt-3 space-y-2.5">
           {view.perks.map((p) => (
-            <li key={p.level}>
-              <span className="inline-block w-10 font-bold text-bronze">N{p.level}</span>
-              {p.label}
+            <li key={p.level} className="flex gap-3 text-sm">
+              <span
+                className="w-12 shrink-0 pt-px text-xs font-bold text-olive-ink tabular-nums"
+                aria-label={`Niveau ${p.level}`}
+              >
+                Niv. {p.level}
+              </span>
+              <span>{p.label}</span>
             </li>
           ))}
         </ul>
       )}
       {view.nextPerk && (
-        <p className="mt-3 border-t border-sand pt-3 text-sm">
-          Prochain : <strong>niveau {view.nextPerk.level}</strong> — {view.nextPerk.label}
+        <p className="mt-4 rounded-2xl bg-paper p-3 text-sm">
+          <span className="font-bold text-forest">Au niveau {view.nextPerk.level} : </span>
+          {view.nextPerk.label}
         </p>
       )}
     </section>

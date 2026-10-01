@@ -47,12 +47,12 @@ export default async function AdminPage() {
 
       <section className="space-y-3">
         <h2 className="font-display text-xl">
-          Figuiers et Légendes (niveau 34+) — livraisons avant-première
+          Figuiers et Légendes (niveau 34+) : livraisons avant-première
         </h2>
         <div className="overflow-x-auto rounded-2xl bg-white">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-sand">
+              <tr className="border-b border-paper">
                 <th className="p-2">Client</th>
                 <th className="p-2">Téléphone</th>
                 <th className="p-2">Niveau</th>
@@ -70,11 +70,11 @@ export default async function AdminPage() {
               {figuiers.map((c) => {
                 const level = levelFromPepins(c.lifetimePepins);
                 return (
-                  <tr key={c.id} className="border-b border-sand">
+                  <tr key={c.id} className="border-b border-paper">
                     <td className="p-2">{c.firstName}</td>
                     <td className="p-2">{c.phone}</td>
                     <td className="p-2">
-                      {level} — {title(level)}
+                      {level}, {title(level)}
                     </td>
                     <td className="p-2">{c.address ?? <em>en attente</em>}</td>
                   </tr>
@@ -90,7 +90,7 @@ export default async function AdminPage() {
         <div className="overflow-x-auto rounded-2xl bg-white">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-sand">
+              <tr className="border-b border-paper">
                 <th className="p-2">Date</th>
                 <th className="p-2">Action</th>
                 <th className="p-2">Client</th>
@@ -103,7 +103,7 @@ export default async function AdminPage() {
             </thead>
             <tbody>
               {recent.map((e) => (
-                <tr key={e.id} className="border-b border-sand">
+                <tr key={e.id} className="border-b border-paper">
                   <td className="p-2 whitespace-nowrap">{formatDateTime(e.createdAt)}</td>
                   <td className="p-2">{TYPE_LABEL[e.type]}</td>
                   <td className="p-2">{e.customerName}</td>

@@ -43,7 +43,7 @@ export function StaffManager({ staff, selfId }: { staff: StaffItem[]; selfId: st
     }
   }
 
-  const input = 'rounded-lg border border-olive-700/40 bg-white p-2';
+  const input = 'rounded-lg border border-olive/40 bg-white p-2';
   return (
     <section className="space-y-3">
       <h2 className="font-display text-xl">Équipe</h2>
@@ -52,7 +52,7 @@ export function StaffManager({ staff, selfId }: { staff: StaffItem[]; selfId: st
           {msg}
         </p>
       )}
-      <ul className="divide-y divide-sand rounded-2xl bg-white">
+      <ul className="divide-y divide-paper rounded-2xl bg-white">
         {staff.map((s) => (
           <li key={s.id} className="flex flex-wrap items-center justify-between gap-2 p-3 text-sm">
             <span>
@@ -134,9 +134,7 @@ export function StaffManager({ staff, selfId }: { staff: StaffItem[]; selfId: st
             <option value="owner">Propriétaire</option>
           </select>
         </label>
-        <button className="rounded-full bg-olive-900 px-4 py-2 font-bold text-white">
-          Ajouter
-        </button>
+        <button className="rounded-full bg-forest px-4 py-2 font-bold text-white">Ajouter</button>
       </form>
     </section>
   );

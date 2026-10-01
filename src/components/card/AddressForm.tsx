@@ -32,8 +32,8 @@ export function AddressForm({ token }: { token: string }) {
   }
 
   return (
-    <form onSubmit={submit} className="space-y-2 rounded-2xl border-2 border-gold bg-white p-4">
-      <h2 className="font-display text-xl">Vous êtes Figuier</h2>
+    <form onSubmit={submit} className="space-y-3 rounded-3xl border-2 border-olive bg-white p-5">
+      <h2 className="font-display text-2xl text-forest">Vous êtes Figuier</h2>
       <p className="text-sm">Où devons-nous livrer vos nouveautés en avant-première ?</p>
       <label htmlFor="address" className="block text-sm font-bold">
         Adresse de livraison
@@ -45,7 +45,7 @@ export function AddressForm({ token }: { token: string }) {
         maxLength={300}
         value={address}
         onChange={(e) => setAddress(e.target.value)}
-        className="w-full rounded-lg border border-olive-700/40 p-2"
+        className="w-full rounded-xl border border-forest/25 p-3 focus:border-forest"
       />
       {error && (
         <p role="alert" className="text-sm text-red-800">
@@ -54,9 +54,9 @@ export function AddressForm({ token }: { token: string }) {
       )}
       <button
         disabled={busy}
-        className="rounded-full bg-olive-900 px-5 py-2 font-bold text-white disabled:opacity-50"
+        className="rounded-full bg-forest px-6 py-3 font-bold text-lime disabled:opacity-50"
       >
-        Enregistrer
+        {busy ? 'Enregistrement…' : 'Enregistrer l’adresse'}
       </button>
     </form>
   );

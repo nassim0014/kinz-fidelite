@@ -46,7 +46,7 @@ export function StaffConsole({
       }
       return data as T;
     } catch {
-      setMsg({ kind: 'error', text: 'Connexion impossible — vérifiez le réseau' });
+      setMsg({ kind: 'error', text: 'Connexion impossible. Vérifiez le réseau.' });
       return null;
     } finally {
       setBusy(false);
@@ -112,8 +112,8 @@ export function StaffConsole({
   }
 
   const tone = {
-    ok: 'bg-olive-700 text-white',
-    warn: 'bg-gold-pale text-ink',
+    ok: 'bg-forest text-lime',
+    warn: 'bg-lime text-ink',
     error: 'bg-red-100 text-red-900',
   };
   return (
@@ -167,11 +167,11 @@ export function StaffConsole({
               inputMode="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="w-full rounded-lg border border-olive-700/40 p-3"
+              className="w-full rounded-lg border border-olive/40 p-3"
             />
             <button
               disabled={busy || !phone}
-              className="w-full rounded-full bg-olive-900 py-3 font-bold text-white disabled:opacity-50"
+              className="w-full rounded-full bg-forest py-3 font-bold text-white disabled:opacity-50"
             >
               Rechercher
             </button>
