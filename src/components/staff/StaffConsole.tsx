@@ -49,6 +49,7 @@ export function StaffConsole({ staffName, isOwner }: { staffName: string; isOwne
     async (query: string) => {
       const v = await call<StaffCustomerView>(`/api/staff/customer?${query}`);
       if (v) setView(v);
+      return v !== null;
     },
     [call],
   );
@@ -56,7 +57,7 @@ export function StaffConsole({ staffName, isOwner }: { staffName: string; isOwne
   const onToken = useCallback(
     (token: string) => {
       setMsg(null);
-      void load(`token=${encodeURIComponent(token)}`);
+      return load(`token=${encodeURIComponent(token)}`);
     },
     [load],
   );

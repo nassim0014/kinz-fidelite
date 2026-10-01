@@ -26,6 +26,20 @@ it('summarises a stamp', () => {
   ).toBe('+2 tampons · +3 pépins · Carte pleine — utilisez la récompense');
 });
 
+it('uses the singular for one pépin', () => {
+  expect(
+    stampMessage({
+      stampsAdded: 1,
+      pepinsAdded: 1,
+      cardStamps: 2,
+      lifetimePepins: 3,
+      levelBefore: 2,
+      levelAfter: 2,
+      cardFull: false,
+    }),
+  ).toBe('+1 tampon · +1 pépin');
+});
+
 it('summarises a redeem', () => {
   expect(
     redeemMessage({

@@ -4,7 +4,7 @@ import { Html5Qrcode, Html5QrcodeSupportedFormats } from 'html5-qrcode';
 import { useEffect, useRef, useState } from 'react';
 import { extractToken } from '@/lib/token';
 
-export function QrScanner({ onToken }: { onToken: (token: string) => void }) {
+export function QrScanner({ onToken }: { onToken: (token: string) => Promise<boolean> }) {
   const [error, setError] = useState<string | null>(null);
   const handled = useRef(false);
 
@@ -25,8 +25,11 @@ export function QrScanner({ onToken }: { onToken: (token: string) => void }) {
           setError('QR code non reconnu — ce n’est pas une carte KINZ');
           return;
         }
+        setError(null);
         handled.current = true;
-        onToken(token);
+        void onToken(token).then((loaded) => {
+          if (!loaded) handled.current = false;
+        });
       },
       () => {},
     );
