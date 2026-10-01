@@ -21,10 +21,8 @@ export function StampTrack({ cardStamps }: { cardStamps: number }) {
               title={stop?.label}
               className={[
                 'flex aspect-square items-center justify-center rounded-full border-2 text-sm font-bold',
-                filled
-                  ? 'border-olive-900 bg-olive-900 text-white'
-                  : 'border-olive-700/40 text-muted',
-                stop ? 'ring-2 ring-gold ring-offset-2' : '',
+                filled ? 'border-forest bg-forest text-white' : 'border-olive/40 text-muted',
+                stop ? 'ring-2 ring-olive ring-offset-2' : '',
               ].join(' ')}
             >
               {n}
@@ -36,10 +34,10 @@ export function StampTrack({ cardStamps }: { cardStamps: number }) {
         {CARD_STOPS.map((s) => {
           const reached = s.stamps <= cardStamps;
           return (
-            <li key={s.stamps} className={reached ? 'font-bold text-olive-900' : 'text-muted'}>
+            <li key={s.stamps} className={reached ? 'font-bold text-forest' : 'text-muted'}>
               <span className="inline-block w-8 font-display">{s.stamps}</span>
               {s.label}
-              {reached ? ' — disponible' : ''}
+              {reached ? ' (disponible)' : ''}
             </li>
           );
         })}

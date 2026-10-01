@@ -1,39 +1,57 @@
 import { isGolden } from '@/lib/rules';
 import type { CardView } from '@/lib/views';
 
+const pepinsWord = (n: number) => (n === 1 ? 'pépin' : 'pépins');
+
 export function LevelPanel({ view }: { view: CardView }) {
   const { level, title, multiplier, lifetimePepins, progress } = view;
   const pct = progress.levelCost
     ? Math.round((progress.intoLevel / progress.levelCost) * 100)
     : 100;
+  const missing = progress.levelCost ? progress.levelCost - progress.intoLevel : 0;
   return (
-    <section className="rounded-2xl bg-olive-900 p-4 text-white">
-      <p className="text-sm text-gold-pale">
+    <section aria-labelledby="level-title" className="px-1">
+      <p className="text-sm font-bold text-olive-ink">
         Niveau {level}
-        {isGolden(level) ? ' ✦ niveau d’or (premier et Fibonacci)' : ''}
+        {isGolden(level) && <span className="font-normal"> ✦ niveau d’or</span>}
       </p>
-      <h2 className="font-display text-2xl">{title}</h2>
-      <p className="mt-1 text-sm">
-        {lifetimePepins} pépins · multiplicateur ×{multiplier}
-      </p>
+      <div className="flex items-end justify-between gap-3">
+        <h2 id="level-title" className="font-display text-4xl leading-tight text-forest">
+          {title}
+        </h2>
+        {multiplier > 1 && (
+          <p className="mb-1.5 shrink-0 rounded-full bg-forest px-3 py-1 text-sm font-bold text-lime">
+            Pépins ×{multiplier}
+          </p>
+        )}
+      </div>
+
       {progress.levelCost ? (
         <>
           <div
-            className="mt-3 h-2 rounded-full bg-white/20"
+            className="mt-3 h-2.5 overflow-hidden rounded-full bg-forest/10"
             role="progressbar"
             aria-label="Progression vers le niveau suivant"
             aria-valuemin={0}
             aria-valuemax={progress.levelCost}
             aria-valuenow={progress.intoLevel}
           >
-            <div className="h-2 rounded-full bg-gold" style={{ width: `${pct}%` }} />
+            <div className="h-full rounded-full bg-olive" style={{ width: `${pct}%` }} />
           </div>
-          <p className="mt-1 text-xs text-gold-pale">
-            Encore {progress.levelCost - progress.intoLevel} pépins avant le niveau {level + 1}
+          <p className="mt-2 text-sm text-muted">
+            {lifetimePepins} {pepinsWord(lifetimePepins)} au total. Encore {missing}{' '}
+            {pepinsWord(missing)} avant le niveau {level + 1}.
           </p>
         </>
       ) : (
-        <p className="mt-2 text-gold-pale">Niveau maximal atteint. Vous êtes une Légende.</p>
+        <p className="mt-2 text-sm text-muted">
+          {lifetimePepins} pépins au total. Niveau maximal atteint : vous êtes une Légende.
+        </p>
+      )}
+      {isGolden(level) && (
+        <p className="mt-1 text-xs text-muted">
+          Un niveau d’or est à la fois un nombre premier et un nombre de Fibonacci.
+        </p>
       )}
     </section>
   );

@@ -35,17 +35,18 @@ export function JoinForm() {
       storeToken(data.token);
       router.push(`/c/${data.token}`);
     } catch {
-      setError('Connexion impossible — réessayez');
+      setError('Connexion impossible. Vérifiez votre réseau et réessayez.');
     } finally {
       setBusy(false);
     }
   }
 
-  const input = 'w-full rounded-lg border border-olive-700/40 bg-white p-3';
+  const input =
+    'mt-1 w-full rounded-xl border border-forest/25 bg-white p-3 text-base focus:border-forest';
   return (
     <form onSubmit={submit} className="space-y-4">
       <div>
-        <label htmlFor="firstName" className="block text-sm font-bold">
+        <label htmlFor="firstName" className="block text-sm font-bold text-forest">
           Prénom
         </label>
         <input
@@ -59,7 +60,7 @@ export function JoinForm() {
         />
       </div>
       <div>
-        <label htmlFor="phone" className="block text-sm font-bold">
+        <label htmlFor="phone" className="block text-sm font-bold text-forest">
           Téléphone
         </label>
         <input
@@ -75,8 +76,8 @@ export function JoinForm() {
         />
       </div>
       <div>
-        <label htmlFor="birthday" className="block text-sm font-bold">
-          Date d’anniversaire (facultatif)
+        <label htmlFor="birthday" className="block text-sm font-bold text-forest">
+          Date d’anniversaire <span className="font-normal text-muted">(facultatif)</span>
         </label>
         <input
           id="birthday"
@@ -86,7 +87,7 @@ export function JoinForm() {
           className={input}
         />
         <p className="mt-1 text-xs text-muted">
-          Votre anniversaire débloque des cadeaux. Vos données restent chez KINZ.
+          Elle débloque des cadeaux le mois de votre anniversaire. Vos données restent chez KINZ.
         </p>
       </div>
       {error && (
@@ -96,9 +97,9 @@ export function JoinForm() {
       )}
       <button
         disabled={busy}
-        className="w-full rounded-full bg-olive-900 py-3 font-bold text-white disabled:opacity-50"
+        className="w-full rounded-full bg-forest py-3.5 font-bold text-lime disabled:opacity-50"
       >
-        Créer ma carte
+        {busy ? 'Création de la carte…' : 'Créer ma carte'}
       </button>
     </form>
   );

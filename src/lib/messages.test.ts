@@ -23,7 +23,7 @@ it('summarises a stamp', () => {
       levelAfter: 5,
       cardFull: true,
     }),
-  ).toBe('+2 tampons · +3 pépins · Carte pleine — utilisez la récompense');
+  ).toBe('+2 tampons · +3 pépins · Carte pleine, utilisez la récompense');
 });
 
 it('uses the singular for one pépin', () => {

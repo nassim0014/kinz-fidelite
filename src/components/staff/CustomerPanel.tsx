@@ -42,10 +42,10 @@ export function CustomerPanel({ appUrl, view, busy, onStamp, onRedeem, onPerk, o
   const btn = 'rounded-full px-5 py-3 font-bold disabled:opacity-50';
   return (
     <div className="space-y-4">
-      <header className="rounded-2xl bg-olive-900 p-4 text-white">
+      <header className="rounded-2xl bg-forest p-4 text-white">
         <h2 className="font-display text-2xl">{card.firstName}</h2>
-        <p className="text-sm text-gold-pale">
-          {view.phone} · Niveau {card.level} — {card.title} · ×{card.multiplier}
+        <p className="text-sm text-lime">
+          {view.phone} · Niveau {card.level}, {card.title} · ×{card.multiplier}
         </p>
       </header>
 
@@ -68,7 +68,7 @@ export function CustomerPanel({ appUrl, view, busy, onStamp, onRedeem, onPerk, o
               setAmount(e.target.value);
               setConfirmBig(false);
             }}
-            className="w-full rounded-lg border border-olive-700/40 p-3 text-lg"
+            className="w-full rounded-lg border border-olive/40 p-3 text-lg"
           />
           {amount && parsed === null && (
             <p role="alert" className="text-sm text-red-800">
@@ -77,7 +77,7 @@ export function CustomerPanel({ appUrl, view, busy, onStamp, onRedeem, onPerk, o
           )}
           <button
             disabled={busy || parsed === null}
-            className={`${btn} w-full bg-olive-900 text-white`}
+            className={`${btn} w-full bg-forest text-white`}
           >
             {confirmBig ? `Confirmer ${parsed} TND` : 'Tamponner'}
           </button>
@@ -94,7 +94,7 @@ export function CustomerPanel({ appUrl, view, busy, onStamp, onRedeem, onPerk, o
         )}
         {reached.map((s) =>
           pendingStop === s.stamps ? (
-            <div key={s.stamps} className="space-y-2 rounded-xl border-2 border-gold p-3">
+            <div key={s.stamps} className="space-y-2 rounded-xl border-2 border-olive p-3">
               <p className="text-sm">
                 Appliquez « {s.label} » en caisse, puis confirmez. La carte sera remise à zéro.
               </p>
@@ -102,11 +102,11 @@ export function CustomerPanel({ appUrl, view, busy, onStamp, onRedeem, onPerk, o
                 <button
                   disabled={busy}
                   onClick={() => onRedeem(s.stamps).then(() => setPendingStop(null))}
-                  className={`${btn} bg-olive-900 text-white`}
+                  className={`${btn} bg-forest text-white`}
                 >
                   Confirmer
                 </button>
-                <button onClick={() => setPendingStop(null)} className={`${btn} bg-sand`}>
+                <button onClick={() => setPendingStop(null)} className={`${btn} bg-paper`}>
                   Annuler
                 </button>
               </div>
@@ -116,9 +116,9 @@ export function CustomerPanel({ appUrl, view, busy, onStamp, onRedeem, onPerk, o
               key={s.stamps}
               disabled={busy}
               onClick={() => setPendingStop(s.stamps)}
-              className={`${btn} block w-full border-2 border-olive-900 text-left`}
+              className={`${btn} block w-full border-2 border-forest text-left`}
             >
-              Utiliser — palier {s.stamps} <span className="font-normal">({s.label})</span>
+              Utiliser le palier {s.stamps} <span className="font-normal">({s.label})</span>
             </button>
           ),
         )}
@@ -130,12 +130,12 @@ export function CustomerPanel({ appUrl, view, busy, onStamp, onRedeem, onPerk, o
           {view.givablePerks.map((p) => (
             <div key={p.level} className="flex items-center justify-between gap-2 text-sm">
               <span>
-                N{p.level} — {p.label}
+                N{p.level} : {p.label}
               </span>
               <button
                 disabled={busy}
                 onClick={() => onPerk(p.level)}
-                className="rounded-full border border-olive-900 px-3 py-1"
+                className="rounded-full border border-forest px-3 py-1"
               >
                 Marquer comme remis
               </button>
@@ -151,25 +151,25 @@ export function CustomerPanel({ appUrl, view, busy, onStamp, onRedeem, onPerk, o
               href={`https://wa.me/${view.phone.replace(/\D/g, '')}?text=${resendMessage}`}
               target="_blank"
               rel="noreferrer"
-              className={`${btn} border-2 border-olive-900`}
+              className={`${btn} border-2 border-forest`}
             >
               Envoyer par WhatsApp
             </a>
             <a
               href={`sms:${view.phone}?body=${resendMessage}`}
-              className={`${btn} border-2 border-olive-900`}
+              className={`${btn} border-2 border-forest`}
             >
               Envoyer par SMS
             </a>
           </div>
         ) : (
-          <button onClick={() => setShowResend(true)} className={`${btn} w-full bg-sand`}>
+          <button onClick={() => setShowResend(true)} className={`${btn} w-full bg-paper`}>
             Renvoyer la carte
           </button>
         )}
       </section>
 
-      <button onClick={onNext} className={`${btn} w-full bg-sand`}>
+      <button onClick={onNext} className={`${btn} w-full bg-paper`}>
         Client suivant
       </button>
     </div>

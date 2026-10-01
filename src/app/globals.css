@@ -1,16 +1,41 @@
 @import 'tailwindcss';
 
+/* Every colour comes from the KINZ logo palette (logos finaux, Conception boutique). */
 @theme {
-  --color-olive-900: #4a5530;
-  --color-olive-700: #6a7b4d;
-  --color-sand: #f5f0e6;
-  --color-ink: #1a1a1a;
-  --color-gold: #c9a961;
-  --color-gold-pale: #f0e3c0;
-  --color-bronze: #7a6320;
-  --color-muted: #4a4a4a;
-  --font-display: var(--font-playfair), Georgia, serif;
-  --font-sans: var(--font-lato), system-ui, sans-serif;
+  --color-forest: #20411e;
+  --color-forest-deep: #183217;
+  --color-olive: #9ea059;
+  --color-olive-ink: #5f6130;
+  --color-lime: #e7f3ad;
+  --color-paper: #f6f8ec;
+  --color-soil: #593514;
+  --color-ink: #1b2a1a;
+  --color-muted: #4e5a4b;
+  --font-display: var(--font-marcellus), Georgia, serif;
+  --font-sans: var(--font-figtree), system-ui, sans-serif;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-olive);
+  outline-offset: 2px;
+}
+
+@keyframes stamp-in {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+}
+
+/* One orchestrated moment: the stamps settle onto the card when it opens. */
+.stamp-in {
+  animation: stamp-in 420ms cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp-in {
+    animation: none;
+  }
 }
 
 @media print {

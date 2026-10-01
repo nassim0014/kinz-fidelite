@@ -22,7 +22,7 @@ export function QrScanner({ onToken }: { onToken: (token: string) => Promise<boo
         if (handled.current) return;
         const token = extractToken(text);
         if (!token) {
-          setError('QR code non reconnu — ce n’est pas une carte KINZ');
+          setError('QR code non reconnu : ce n’est pas une carte KINZ');
           return;
         }
         setError(null);
@@ -33,7 +33,7 @@ export function QrScanner({ onToken }: { onToken: (token: string) => Promise<boo
       },
       () => {},
     );
-    started.catch(() => setError('Caméra indisponible — utilisez la recherche par téléphone'));
+    started.catch(() => setError('Caméra indisponible. Utilisez la recherche par téléphone.'));
     return () => {
       started
         .then(() => scanner.stop())

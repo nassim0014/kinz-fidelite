@@ -1,4 +1,4 @@
-/** Le Code KINZ — every game rule lives here. Pure functions only. */
+/** Le Code KINZ: every game rule lives here. Pure functions only. */
 
 export const MIN_AMOUNT_TND = 40;
 export const MAX_AMOUNT_TND = 5000;
@@ -68,7 +68,7 @@ export function levelProgress(pepins: number): {
 }
 
 export function title(level: number): string {
-  if (level >= 50) return "Légende — Le Figuier d'Or";
+  if (level >= 50) return 'Légende du Figuier d’Or';
   if (level >= 34) return 'Figuier';
   if (level >= 21) return 'Figue';
   if (level >= 13) return 'Fleur';
@@ -125,7 +125,7 @@ export const PERKS: readonly Perk[] = [
   { level: 5, label: 'Huile de figue de barbarie 10 ml offerte', kind: 'once' },
   { level: 7, label: '−20 % pendant le mois de votre anniversaire', kind: 'ongoing' },
   { level: 11, label: 'Emballage cadeau offert', kind: 'ongoing' },
-  { level: 13, label: 'Pépins ×2 — vous devenez Fleur', kind: 'auto' },
+  { level: 13, label: 'Pépins ×2, vous devenez Fleur', kind: 'auto' },
   { level: 17, label: 'Votre carte redémarre à 1 tampon', kind: 'auto' },
   { level: 19, label: 'Tampons doublés le jour de votre anniversaire', kind: 'auto' },
   { level: 23, label: 'Votre carte redémarre à 2 tampons', kind: 'auto' },

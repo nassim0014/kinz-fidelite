@@ -76,7 +76,7 @@ test("l'équipe applique une récompense et la carte repart à zéro", async ({ 
 
   const staff = await staffPage(browser);
   await findCustomer(staff, '22555111', 'Amira');
-  await staff.getByRole('button', { name: /Utiliser — palier 3/ }).click();
+  await staff.getByRole('button', { name: /Utiliser le palier 3/ }).click();
   await staff.getByRole('button', { name: 'Confirmer', exact: true }).click();
   await expect(staff.getByRole('status')).toContainText('Récompense appliquée');
   await expect(staff.getByText('0 / 13')).toBeVisible();
