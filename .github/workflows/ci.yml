@@ -37,3 +37,10 @@ jobs:
           name: playwright-report
           path: playwright-report
           retention-days: 7
+
+  store-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the store PC image (app + tools)
+        run: docker build --target runner . && docker build --target builder .

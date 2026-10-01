@@ -35,6 +35,12 @@ Spécification complète : [`docs/superpowers/specs/2026-09-30-kinz-fidelite-des
 | `/staff`     | Équipe (nom + PIN à 6 chiffres)       | Scanner, tamponner, appliquer les récompenses               |
 | `/admin`     | Propriétaires                         | Équipe, journal, Figuiers à livrer, exports CSV, affiche QR |
 
+## Installation au magasin (Wi-Fi, sans Internet public)
+
+Pour faire tourner l'application sur le PC Windows du magasin, accessible aux téléphones du
+Wi-Fi, suivez le guide [`docs/magasin.md`](docs/magasin.md). Il utilise Docker Desktop et une
+seule commande : `store\demarrer.ps1`.
+
 ## Développement local
 
 Prérequis : Node 20+, Docker.

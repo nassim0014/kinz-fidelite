@@ -1,0 +1,74 @@
+# Store PC setup (Windows + Docker Desktop). Start with store/demarrer.ps1 — see docs/magasin.md.
+name: kinz-magasin
+
+x-database-url: &database-url postgres://kinz:${POSTGRES_PASSWORD:?missing in .env.store}@db:5432/kinz
+
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: kinz
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?missing in .env.store}
+      POSTGRES_DB: kinz
+    volumes:
+      - kinz-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U kinz -d kinz']
+      interval: 3s
+      retries: 30
+
+  # Applies database changes, then exits. The app only starts once it has succeeded.
+  migrate:
+    build: { context: ., target: builder }
+    image: kinz-fidelite-tools
+    command: ['npm', 'run', 'db:migrate']
+    environment:
+      DATABASE_URL: *database-url
+    depends_on:
+      db: { condition: service_healthy }
+    restart: 'no'
+
+  app:
+    build: { context: ., target: runner }
+    image: kinz-fidelite-app
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: *database-url
+      SESSION_SECRET: ${SESSION_SECRET:?missing in .env.store}
+      # Address printed in every QR code: plain http on the shop Wi-Fi.
+      APP_URL: http://${STORE_HOST:?missing in .env.store}
+      # Caddy sets X-Forwarded-For: lets the PIN lockout tell devices apart.
+      TRUST_PROXY: '1'
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+
+  # The only service phones talk to: http for customers, https (own certificate) for staff.
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    environment:
+      STORE_HOST: ${STORE_HOST:?missing in .env.store}
+    volumes:
+      - ./store/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - app
+
+  # One-off commands (owner account): docker compose ... run --rm tools npm run db:seed-owner -- ...
+  tools:
+    image: kinz-fidelite-tools
+    profiles: ['tools']
+    environment:
+      DATABASE_URL: *database-url
+    depends_on:
+      db: { condition: service_healthy }
+
+volumes:
+  kinz-data:
+  caddy-data:
+  caddy-config:
