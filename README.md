@@ -73,7 +73,7 @@ depuis `/admin`.
 
 ## Sécurité
 
-- Les PIN sont hachés (bcrypt). Après 5 erreurs, le compte est verrouillé 10 minutes.
+- Les PIN sont hachés (bcrypt). Après 5 erreurs **depuis un même appareil**, cet appareil est verrouillé 10 minutes pour ce compte : un inconnu ne peut donc pas bloquer le téléphone de l'équipe. L'appareil est reconnu par son adresse IP, fournie par Vercel, ou par le proxy du magasin si `TRUST_PROXY=1`.
 - Seule l'équipe connectée peut tamponner, et la base de données refuse un 2e tampon le même jour.
 - Le lien de carte contient un code secret aléatoire de 128 bits. Il n'est jamais transmis à d'autres sites (`Referrer-Policy: no-referrer`).
 - S'inscrire avec un numéro déjà utilisé ne donne **jamais** accès à la carte existante.

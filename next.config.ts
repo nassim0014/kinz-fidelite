@@ -10,8 +10,12 @@ const securityHeaders = [
   { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains' },
 ];
 
+// Dev server only: let phones on the same Wi-Fi load the app through APP_URL's host.
+const appHost = process.env.APP_URL ? new URL(process.env.APP_URL).hostname : undefined;
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  allowedDevOrigins: appHost ? [appHost] : [],
   async headers() {
     return [{ source: '/(.*)', headers: securityHeaders }];
   },

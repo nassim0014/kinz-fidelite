@@ -58,7 +58,7 @@ export default async function CardPage({ params }: { params: Promise<{ token: st
         Astuce : ajoutez cette page à votre écran d’accueil pour retrouver votre carte.
       </p>
       <RememberCard token={token} />
-      <AutoRefresh />
+      <AutoRefresh token={token} />
     </main>
   );
 }
