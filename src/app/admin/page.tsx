@@ -16,6 +16,7 @@ const TYPE_LABEL = {
   redeem: 'Récompense',
   bonus: 'Bonus pépins',
   perk_given: 'Avantage remis',
+  reminder_sent: 'Relance',
 } as const;
 
 export default async function AdminPage() {

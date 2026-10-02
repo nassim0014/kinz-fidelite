@@ -14,7 +14,13 @@ import {
 } from 'drizzle-orm/pg-core';
 
 export const staffRole = pgEnum('staff_role', ['staff', 'owner']);
-export const eventType = pgEnum('event_type', ['stamp', 'redeem', 'bonus', 'perk_given']);
+export const eventType = pgEnum('event_type', [
+  'stamp',
+  'redeem',
+  'bonus',
+  'perk_given',
+  'reminder_sent',
+]);
 
 export const staff = pgTable('staff', {
   id: uuid('id').primaryKey().defaultRandom(),
