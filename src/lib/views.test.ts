@@ -35,3 +35,15 @@ it('asks Figuiers (level 34+) for a delivery address until they give one', () =>
     false,
   );
 });
+
+it('shows the birthday perk the customer has earned', () => {
+  const born = { ...base, birthday: '1990-10-02' };
+  const day = new Date('2026-10-02T10:00:00Z');
+  const laterThatMonth = new Date('2026-10-05T10:00:00Z');
+  expect(buildCardView({ ...born, lifetimePepins: 171 }, day).birthdayPerk).toBe('day');
+  expect(buildCardView({ ...born, lifetimePepins: 171 }, laterThatMonth).birthdayPerk).toBe(
+    'month',
+  );
+  expect(buildCardView({ ...born, lifetimePepins: 15 }, day).birthdayPerk).toBeNull();
+  expect(buildCardView({ ...base, lifetimePepins: 171 }, day).birthdayPerk).toBeNull();
+});

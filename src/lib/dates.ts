@@ -22,6 +22,11 @@ export function isBirthday(birthday: string | null, now: Date = new Date()): boo
   return bm === 2 && bd === 29 && !isLeap(y!) && m === 2 && d === 28;
 }
 
+export function isBirthdayMonth(birthday: string | null, now: Date = new Date()): boolean {
+  if (!birthday) return false;
+  return birthday.slice(5, 7) === businessDate(now).slice(5, 7);
+}
+
 export function isValidBirthday(value: string, now: Date = new Date()): boolean {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   const date = new Date(`${value}T00:00:00Z`);

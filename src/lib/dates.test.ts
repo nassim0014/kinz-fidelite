@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { businessDate, isBirthday, isValidBirthday } from './dates';
+import { businessDate, isBirthday, isBirthdayMonth, isValidBirthday } from './dates';
 
 describe('businessDate (Africa/Tunis, UTC+1)', () => {
   it('rolls over at Tunis midnight, not UTC midnight', () => {
@@ -32,5 +32,15 @@ describe('isValidBirthday', () => {
     ['01/10/1990', false],
   ])('%s → %s', (value, expected) => {
     expect(isValidBirthday(value, now)).toBe(expected);
+  });
+});
+
+describe('isBirthdayMonth', () => {
+  it('detects the birthday month in Tunis time', () => {
+    expect(isBirthdayMonth('1990-03-14', new Date('2026-03-01T00:30:00+01:00'))).toBe(true);
+    // Already 1 March in Tunis.
+    expect(isBirthdayMonth('1990-03-14', new Date('2026-02-28T23:30:00Z'))).toBe(true);
+    expect(isBirthdayMonth('1990-03-14', new Date('2026-04-01T10:00:00Z'))).toBe(false);
+    expect(isBirthdayMonth(null)).toBe(false);
   });
 });

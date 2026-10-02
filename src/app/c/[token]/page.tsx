@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { AddressForm } from '@/components/card/AddressForm';
 import { AutoRefresh } from '@/components/card/AutoRefresh';
+import { BirthdayBanner } from '@/components/card/BirthdayBanner';
 import { HowItWorks } from '@/components/card/HowItWorks';
 import { LevelPanel } from '@/components/card/LevelPanel';
 import { LoyaltyCard } from '@/components/card/LoyaltyCard';
@@ -38,6 +39,7 @@ export default async function CardPage({ params }: { params: Promise<{ token: st
   return (
     <main className="mx-auto max-w-md space-y-7 px-4 pt-6 pb-12">
       <h1 className="px-1 font-display text-3xl text-forest">Bonjour {view.firstName}</h1>
+      <BirthdayBanner perk={view.birthdayPerk} />
       <LoyaltyCard cardStamps={view.cardStamps} qrSvg={svg} />
       <LevelPanel view={view} />
       {view.needsAddress && <AddressForm token={token} />}

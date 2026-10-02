@@ -4,6 +4,7 @@ import { type FormEvent, useState } from 'react';
 import { StampTrack } from '@/components/card/StampTrack';
 import { parseAmount } from '@/lib/amount';
 import type { StaffCustomerView } from '@/lib/views';
+import { smsLink, waLink } from '@/lib/whatsapp';
 
 interface Props {
   /** Canonical public address (APP_URL) used in links sent to customers. */
@@ -36,9 +37,7 @@ export function CustomerPanel({ appUrl, view, busy, onStamp, onRedeem, onPerk, o
     if (await onStamp(amount)) setAmount('');
   }
 
-  const resendMessage = showResend
-    ? encodeURIComponent(`Votre carte de fidélité KINZ : ${appUrl}/c/${card.token}`)
-    : '';
+  const resendMessage = `Votre carte de fidélité KINZ : ${appUrl}/c/${card.token}`;
   const btn = 'rounded-full px-5 py-3 font-bold disabled:opacity-50';
   return (
     <div className="space-y-4">
@@ -148,7 +147,7 @@ export function CustomerPanel({ appUrl, view, busy, onStamp, onRedeem, onPerk, o
         {showResend ? (
           <div className="flex flex-wrap gap-2">
             <a
-              href={`https://wa.me/${view.phone.replace(/\D/g, '')}?text=${resendMessage}`}
+              href={waLink(view.phone, resendMessage)}
               target="_blank"
               rel="noreferrer"
               className={`${btn} border-2 border-forest`}
@@ -156,7 +155,7 @@ export function CustomerPanel({ appUrl, view, busy, onStamp, onRedeem, onPerk, o
               Envoyer par WhatsApp
             </a>
             <a
-              href={`sms:${view.phone}?body=${resendMessage}`}
+              href={smsLink(view.phone, resendMessage)}
               className={`${btn} border-2 border-forest`}
             >
               Envoyer par SMS

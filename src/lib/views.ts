@@ -1,4 +1,5 @@
 import type { Customer } from '@/db/schema';
+import { isBirthday, isBirthdayMonth } from './dates';
 import {
   CARD_MAX,
   CARD_STOPS,
@@ -25,6 +26,8 @@ export interface CardView {
   perks: Perk[];
   nextPerk: Perk | null;
   needsAddress: boolean;
+  /** Birthday perk running right now: the month discount (level 7+) or double stamps today (19+). */
+  birthdayPerk: 'month' | 'day' | null;
 }
 
 export interface StaffCustomerView {
@@ -54,7 +57,7 @@ export interface RedeemResult {
   levelAfter: number;
 }
 
-export function buildCardView(c: Customer): CardView {
+export function buildCardView(c: Customer, now: Date = new Date()): CardView {
   const { level, intoLevel, levelCost } = levelProgress(c.lifetimePepins);
   return {
     token: c.token,
@@ -70,5 +73,11 @@ export function buildCardView(c: Customer): CardView {
     perks: perksUnlocked(level),
     nextPerk: nextPerk(level),
     needsAddress: level >= 34 && !c.address,
+    birthdayPerk:
+      level >= 19 && isBirthday(c.birthday, now)
+        ? 'day'
+        : level >= 7 && isBirthdayMonth(c.birthday, now)
+          ? 'month'
+          : null,
   };
 }

@@ -98,3 +98,28 @@ test('un ticket de 300 TND ou plus demande une confirmation avant de tamponner',
   await staff.getByRole('button', { name: 'Confirmer 350 TND' }).click();
   await expect(staff.getByRole('status')).toContainText('+3 tampons');
 });
+
+test("le propriétaire relance par WhatsApp un client qui n'utilise pas sa récompense", async ({
+  page,
+  browser,
+}) => {
+  await join(page, 'Rania', '22 444 333');
+  const db = makeDb(process.env.DATABASE_URL!, { max: 1 });
+  await db
+    .update(customers)
+    .set({ cardStamps: 3, createdAt: new Date(Date.now() - 30 * 86_400_000) })
+    .where(eq(customers.phone, '+21622444333'));
+  await db.$client.end();
+
+  const owner = await staffPage(browser);
+  // Never leave the test server: the WhatsApp tab is answered locally.
+  await owner.context().route('https://wa.me/**', (route) => route.fulfill({ body: 'ok' }));
+  await owner.goto('/admin');
+  const link = owner.getByRole('link', { name: 'Relancer Rania par WhatsApp' });
+  await expect(link).toHaveAttribute(
+    'href',
+    /^https:\/\/wa\.me\/21622444333\?text=Bonjour%20Rania/,
+  );
+  await link.click();
+  await expect(link).toHaveCount(0);
+});
