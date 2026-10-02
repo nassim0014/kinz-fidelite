@@ -19,6 +19,8 @@
 [lang='ar'] {
   --font-sans: var(--font-readex), var(--font-figtree), system-ui, sans-serif;
   --font-display: var(--font-readex), var(--font-figtree), system-ui, sans-serif;
+  /* font-family resolves on <body>, so it must be set again here for children to inherit it. */
+  font-family: var(--font-sans);
 }
 
 :focus-visible {

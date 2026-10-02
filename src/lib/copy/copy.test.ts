@@ -66,7 +66,7 @@ describe('Tounsi, English and Arabic dictionaries', () => {
     });
 
     it(`${l} has no em dash`, () => {
-      expect(allStrings(copy).some((s) => s.includes('—'))).toBe(false);
+      expect(allStrings(copy).some((s) => s.includes('\u2014'))).toBe(false);
     });
   }
 
@@ -97,7 +97,7 @@ describe('Arabic layout', () => {
     const strings = allStrings(getCopy('ar'));
     // Remove the isolated runs, then nothing that reads left-to-right may be left.
     const loose = strings.filter((s) =>
-      /\d+ TND|×\d/.test(s.replace(/\u2066[^\u2069]*\u2069/g, '')),
+      /\d+ TND|×\d|[−-]\d+ ?%/.test(s.replace(/\u2066[^\u2069]*\u2069/g, '')),
     );
     expect(loose).toEqual([]);
   });

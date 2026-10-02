@@ -145,6 +145,11 @@ test('la carte passe en arabe, de droite à gauche, et le reste sur un autre té
   await expect(main).toHaveAttribute('dir', 'rtl');
   await expect(main).toHaveAttribute('lang', 'ar');
   await expect(page.getByRole('heading', { name: 'مرحبًا Yasmine' })).toBeVisible();
+  // Body text, not only headings, must use the Arabic brand font.
+  const bodyFont = await page
+    .getByText('اعرض هذا الرمز')
+    .evaluate((el) => getComputedStyle(el).fontFamily);
+  expect(bodyFont).toMatch(/Readex/i);
 
   const other = await browser.newContext({ baseURL: 'http://localhost:3100' });
   const phone = await other.newPage();
