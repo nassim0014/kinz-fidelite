@@ -1,17 +1,16 @@
+import type { Copy } from '@/lib/copy';
 import { buildRoadmap } from '@/lib/roadmap';
-
-const short = (title: string) => title.split(' du ')[0];
 
 /**
  * The seven titles on one branch, alternating above and below it like the leaves of the logo's
  * laurel, so each name gets two columns of room on a phone.
  */
-export function RoadmapStrip({ className = '' }: { className?: string }) {
+export function RoadmapStrip({ copy, className = '' }: { copy: Copy; className?: string }) {
   const { stages } = buildRoadmap();
   return (
     <figure className={className}>
       <ol
-        aria-label="Les étapes du parcours"
+        aria-label={copy.strip.label}
         className="grid grid-cols-7 grid-rows-[auto_1.5rem_auto] text-forest"
       >
         {stages.map((s, i) => {
@@ -26,7 +25,9 @@ export function RoadmapStrip({ className = '' }: { className?: string }) {
                 style={{ gridColumnStart: i + 1 }}
               >
                 <span className="text-[0.65rem] text-muted tabular-nums">{s.from}</span>
-                <span className="font-display text-[0.9rem] leading-tight">{short(s.title)}</span>
+                <span className="font-display text-[0.9rem] leading-tight">
+                  {copy.strip.short[s.from as keyof Copy['strip']['short']]}
+                </span>
                 {/* Every stage keeps room for a badge so names line up across the row. */}
                 <span
                   aria-hidden={!s.boost}
@@ -67,8 +68,11 @@ export function RoadmapStrip({ className = '' }: { className?: string }) {
         })}
       </ol>
       <figcaption className="sr-only">
-        De la graine au figuier d’or :{' '}
-        {stages.map((s) => `${s.title} au niveau ${s.from}`).join(', ')}.
+        {copy.strip.caption(
+          stages
+            .map((s) => copy.strip.stageAt(copy.titles[s.from as keyof Copy['titles']], s.from))
+            .join(', '),
+        )}
       </figcaption>
     </figure>
   );
