@@ -48,9 +48,9 @@ export function RoadmapStrip({ copy, className = '' }: { copy: Copy; className?:
                   className={[
                     'absolute top-1/2 h-0.5 -translate-y-1/2 bg-olive',
                     i === 0
-                      ? 'left-1/2 right-0'
+                      ? 'start-1/2 end-0'
                       : i === stages.length - 1
-                        ? 'right-1/2 left-0'
+                        ? 'end-1/2 start-0'
                         : 'inset-x-0',
                   ].join(' ')}
                 />

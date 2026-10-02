@@ -40,7 +40,7 @@ export function LoyaltyCard({
         </p>
       </div>
 
-      <div className="mx-auto mt-5 w-full max-w-60 rounded-2xl bg-white p-3">
+      <div dir="ltr" className="mx-auto mt-5 w-full max-w-60 rounded-2xl bg-white p-3">
         <div aria-label={t.qrLabel} dangerouslySetInnerHTML={{ __html: qrSvg }} />
       </div>
       <p className="mt-3 text-center text-sm text-lime/80">{t.present}</p>

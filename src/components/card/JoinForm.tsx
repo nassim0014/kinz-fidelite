@@ -28,7 +28,7 @@ export function JoinForm({ locale }: { locale: Locale }) {
       const res = await fetch('/api/customers', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ firstName, phone, birthday: birthday || undefined }),
+        body: JSON.stringify({ firstName, phone, birthday: birthday || undefined, locale }),
       });
       const data = await res.json();
       if (!res.ok) {

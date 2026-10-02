@@ -11,6 +11,14 @@ export const LOCALE_DIR: Record<Locale, 'ltr' | 'rtl'> = {
   ar: 'rtl',
 };
 
+/** BCP 47 tag for the `lang` attribute: `tn` alone would mean Setswana. */
+export const LOCALE_LANG: Record<Locale, string> = {
+  fr: 'fr',
+  tn: 'aeb-Latn',
+  en: 'en',
+  ar: 'ar',
+};
+
 /** Each option is written in its own language. */
 export const LOCALE_LABEL: Record<Locale, string> = {
   fr: 'FR',

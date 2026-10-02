@@ -13,7 +13,8 @@ import { env } from '@/lib/env';
 import { qrSvg } from '@/lib/qr';
 import { isCardToken } from '@/lib/token';
 import { buildCardView } from '@/lib/views';
-import { getCopy } from '@/lib/copy';
+import { LocaleSwitcher } from '@/components/LocaleSwitcher';
+import { getCopy, LOCALE_DIR, LOCALE_LANG } from '@/lib/copy';
 import { getCustomerByToken } from '@/server/customers';
 
 export const dynamic = 'force-dynamic';
@@ -40,7 +41,12 @@ export default async function CardPage({ params }: { params: Promise<{ token: st
   const svg = await qrSvg(`${env().APP_URL}/c/${token}`);
 
   return (
-    <main className="mx-auto max-w-md space-y-7 px-4 pt-6 pb-12">
+    <main
+      lang={LOCALE_LANG[customer.locale]}
+      dir={LOCALE_DIR[customer.locale]}
+      className="mx-auto max-w-md space-y-7 px-4 pt-4 pb-12"
+    >
+      <LocaleSwitcher current={customer.locale} token={token} />
       <h1 className="px-1 font-display text-3xl text-forest">{copy.card.hello(view.firstName)}</h1>
       <BirthdayBanner perk={view.birthdayPerk} copy={copy} />
       <LoyaltyCard cardStamps={view.cardStamps} qrSvg={svg} copy={copy} />

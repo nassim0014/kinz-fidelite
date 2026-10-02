@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import { KinzLogo } from '@/components/brand/KinzLogo';
 import { JoinForm } from '@/components/card/JoinForm';
+import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { RoadmapStrip } from '@/components/roadmap/RoadmapStrip';
-import { getCopy } from '@/lib/copy';
+import { getCopy, LOCALE_DIR, LOCALE_LANG } from '@/lib/copy';
 import { visitorLocale } from '@/server/locale';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -13,8 +14,13 @@ export default async function JoinPage() {
   const locale = await visitorLocale();
   const copy = getCopy(locale);
   return (
-    <main className="mx-auto max-w-md px-4 pt-8 pb-12">
-      <KinzLogo variant="full" className="mx-auto h-28 w-auto text-forest" />
+    <main
+      lang={LOCALE_LANG[locale]}
+      dir={LOCALE_DIR[locale]}
+      className="mx-auto max-w-md px-4 pt-4 pb-12"
+    >
+      <LocaleSwitcher current={locale} />
+      <KinzLogo variant="full" className="mx-auto mt-4 h-28 w-auto text-forest" />
       <h1 className="mt-7 font-display text-3xl leading-tight text-forest">{copy.join.heading}</h1>
       <ul className="mt-4 space-y-2.5">
         {copy.join.promises.map((p) => (

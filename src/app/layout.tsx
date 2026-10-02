@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from 'next';
-import { Figtree, Marcellus } from 'next/font/google';
+import { Figtree, Marcellus, Readex_Pro } from 'next/font/google';
 import './globals.css';
 
 const figtree = Figtree({ subsets: ['latin'], variable: '--font-figtree' });
 const marcellus = Marcellus({ subsets: ['latin'], weight: '400', variable: '--font-marcellus' });
+// Only the Arabic screens use it (see [lang='ar'] in globals.css).
+const readex = Readex_Pro({ subsets: ['arabic'], variable: '--font-readex', preload: false });
 
 export const metadata: Metadata = {
   title: { default: 'KINZ Fidélité', template: '%s · KINZ Fidélité' },
@@ -16,7 +18,7 @@ export const viewport: Viewport = { themeColor: '#20411E', width: 'device-width'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${figtree.variable} ${marcellus.variable}`}>
+    <html lang="fr" className={`${figtree.variable} ${marcellus.variable} ${readex.variable}`}>
       <body className="min-h-dvh bg-paper font-sans text-ink antialiased">{children}</body>
     </html>
   );

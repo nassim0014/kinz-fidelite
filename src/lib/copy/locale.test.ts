@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { detectLocale, localeFromRequest, parseLocale } from './locale';
+import { detectLocale, LOCALE_LANG, localeFromRequest, parseLocale } from './locale';
 
 describe('parseLocale', () => {
   it('accepts the four languages only', () => {
@@ -26,5 +26,11 @@ describe('localeFromRequest', () => {
     expect(localeFromRequest('tn', 'ar')).toBe('tn');
     expect(localeFromRequest('xx', 'en-US')).toBe('en');
     expect(localeFromRequest(undefined, null)).toBe('fr');
+  });
+});
+
+describe('LOCALE_LANG', () => {
+  it('gives the browser a real language tag for Tounsi', () => {
+    expect(LOCALE_LANG).toEqual({ fr: 'fr', tn: 'aeb-Latn', en: 'en', ar: 'ar' });
   });
 });

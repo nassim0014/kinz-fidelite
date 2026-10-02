@@ -123,3 +123,32 @@ test("le propriétaire relance par WhatsApp un client qui n'utilise pas sa réco
   await link.click();
   await expect(link).toHaveCount(0);
 });
+
+test('un client choisit le tounsi avant de créer sa carte', async ({ page }) => {
+  await page.goto('/rejoindre?nouveau=1');
+  await page.getByRole('button', { name: 'Tounsi' }).click();
+  await expect(page.getByLabel('Ismek')).toBeVisible();
+  await page.getByLabel('Ismek').fill('Rima');
+  await page.getByLabel('Noumrou').fill('22 333 444');
+  await page.getByRole('button', { name: 'A3mel carte mte3i' }).click();
+  await expect(page).toHaveURL(/\/c\/[A-Za-z0-9_-]{22}$/);
+  await expect(page.getByRole('heading', { name: '3aslema Rima' })).toBeVisible();
+});
+
+test('la carte passe en arabe, de droite à gauche, et le reste sur un autre téléphone', async ({
+  page,
+  browser,
+}) => {
+  await join(page, 'Yasmine', '22 666 777');
+  await page.getByRole('button', { name: 'عربي' }).click();
+  const main = page.locator('main');
+  await expect(main).toHaveAttribute('dir', 'rtl');
+  await expect(main).toHaveAttribute('lang', 'ar');
+  await expect(page.getByRole('heading', { name: 'مرحبًا Yasmine' })).toBeVisible();
+
+  const other = await browser.newContext({ baseURL: 'http://localhost:3100' });
+  const phone = await other.newPage();
+  await phone.goto(new URL(page.url()).pathname);
+  await expect(phone.locator('main')).toHaveAttribute('dir', 'rtl');
+  await other.close();
+});
