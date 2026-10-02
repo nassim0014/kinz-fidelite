@@ -23,6 +23,7 @@ export const tn = {
     optional: '(ken t7eb)',
     birthdayHint: 'Dabber cadeauwet fi chhar 3id miledek. Ma3loumetek yab9aw 3and KINZ.',
     birthdayPlaceholder: 'jj/mm/aaaa',
+    pickDate: '5tar mel calendrier',
     submit: 'A3mel carte mte3ek',
     submitting: '9a3din na3mlou fil carte…',
   },
@@ -72,7 +73,7 @@ export const tn = {
   },
 
   perksList: {
-    heading: 'El avantages mte3i',
+    heading: 'Les avantages mte3i',
     none: 'Awel avantage mte3ek, échantillon bienvenue, yji fil niveau el jey.',
     levelShort: (n: number) => `Niv. ${n}`,
     levelLong: (n: number) => `Niveau ${n}`,
@@ -80,7 +81,7 @@ export const tn = {
   },
 
   how: {
-    heading: 'Kifech temchi ?',
+    heading: 'Kifech lehkeya ?',
     items: [
       {
         term: 'El tampons',

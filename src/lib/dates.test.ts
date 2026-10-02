@@ -4,6 +4,8 @@ import {
   isBirthday,
   isBirthdayMonth,
   isValidBirthday,
+  formatDateTyping,
+  isoToDayMonthYear,
   parseDayMonthYear,
 } from './dates';
 
@@ -61,5 +63,28 @@ describe('parseDayMonthYear', () => {
   it('refuses impossible or partial dates', () => {
     for (const bad of ['31/02/1990', '14/13/1990', '03/14', '1990-03-14', 'abc', ''])
       expect(parseDayMonthYear(bad)).toBeNull();
+  });
+});
+
+describe('formatDateTyping', () => {
+  it('adds the slashes while the customer types digits only', () => {
+    expect(formatDateTyping('1')).toBe('1');
+    expect(formatDateTyping('14')).toBe('14');
+    expect(formatDateTyping('140')).toBe('14/0');
+    expect(formatDateTyping('1403')).toBe('14/03');
+    expect(formatDateTyping('14031990')).toBe('14/03/1990');
+  });
+  it('keeps a pasted or typed date and drops anything else', () => {
+    expect(formatDateTyping('14/03/1990')).toBe('14/03/1990');
+    expect(formatDateTyping('14-03-1990')).toBe('14/03/1990');
+    expect(formatDateTyping('140319901')).toBe('14/03/1990');
+    expect(formatDateTyping('ab')).toBe('');
+  });
+});
+
+describe('isoToDayMonthYear', () => {
+  it('shows a calendar date as dd/mm/yyyy', () => {
+    expect(isoToDayMonthYear('1990-03-14')).toBe('14/03/1990');
+    expect(isoToDayMonthYear('')).toBe('');
   });
 });
