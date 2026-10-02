@@ -2,6 +2,7 @@ import { and, eq, gte, sql } from 'drizzle-orm';
 import type { Db } from '@/db';
 import { customers, events } from '@/db/schema';
 import { businessDate } from '@/lib/dates';
+import type { Locale } from '@/lib/copy/locale';
 import { type ReminderReason, reminderReason } from '@/lib/reminders';
 import { AppError } from './errors';
 
@@ -11,6 +12,7 @@ export interface ReminderCandidate {
   phone: string;
   token: string;
   cardStamps: number;
+  locale: Locale;
   reason: ReminderReason;
 }
 
@@ -58,6 +60,7 @@ function toCandidate(c: typeof customers.$inferSelect, reason: ReminderReason): 
     phone: c.phone,
     token: c.token,
     cardStamps: c.cardStamps,
+    locale: c.locale,
     reason,
   };
 }

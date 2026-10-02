@@ -44,11 +44,15 @@ export function ReminderList({
           <a
             href={waLink(
               c.phone,
-              reminderMessage(c.reason, {
-                firstName: c.firstName,
-                cardStamps: c.cardStamps,
-                cardUrl: `${appUrl}/c/${c.token}`,
-              }),
+              reminderMessage(
+                c.reason,
+                {
+                  firstName: c.firstName,
+                  cardStamps: c.cardStamps,
+                  cardUrl: `${appUrl}/c/${c.token}`,
+                },
+                c.locale,
+              ),
             )}
             target="_blank"
             rel="noopener"

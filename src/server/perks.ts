@@ -83,6 +83,7 @@ export async function getStaffView(
   return {
     customerId: c.id,
     phone: c.phone,
+    locale: c.locale,
     card: buildCardView(c),
     stampedToday: Boolean(stampedToday),
     givablePerks: await givablePerks(db, c, now),

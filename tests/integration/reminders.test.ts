@@ -152,6 +152,20 @@ describe('POST /api/admin/reminders', () => {
   });
 });
 
+describe('reminder language', () => {
+  it("gives the reminder list the customer's language", async () => {
+    const s = await makeStaff('Nassim', 'owner');
+    const c = await makeCustomer({ cardStamps: 3 });
+    await testDb
+      .update(customers)
+      .set({ locale: 'tn', createdAt: daysAgo(60) })
+      .where(eq(customers.id, c.id));
+    await visit(c.id, s.id, daysAgo(30));
+    const [candidate] = await listReminderCandidates(testDb, now);
+    expect(candidate).toMatchObject({ customerId: c.id, locale: 'tn' });
+  });
+});
+
 describe('returnStats', () => {
   it('counts returning customers and reminders followed by a visit', async () => {
     const s = await makeStaff('Nassim', 'owner');
