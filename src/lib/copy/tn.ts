@@ -121,7 +121,7 @@ export const tn = {
   },
 
   errors: {
-    INVALID_PHONE: 'Noumrouk 8alet (8 ar9am tounsiya)',
+    INVALID_PHONE: 'Noumrouk 8alet (8 nwemer twensa)',
     PHONE_TAKEN: 'El noumrou hedha 3andou carte. Otlob mel comptoir yab3thoulek.',
     INVALID_ADDRESS: 'Adresse 8alta',
     NOT_FOUND: 'Client mouch mawjoud',
