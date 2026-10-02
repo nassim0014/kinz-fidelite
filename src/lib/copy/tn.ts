@@ -11,28 +11,28 @@ export const tn = {
   switcher: 'Lougha',
 
   join: {
-    heading: 'Carte el fidélité mte3ek, fi telifounek',
+    heading: 'Carte fidélité mte3ek, fi telifounek',
     promises: [
       'Tampon kol marra tzourna ou techri b 40 TND walla akther',
       'Cadeauwet fil niveaux 2, 3, 5, 7, 11, 13… a3ref inti chnowa ba3d',
     ],
     journey: '50 niveau, w pépins yetdha3fou fi thnitek :',
     firstName: 'Ismek',
-    phone: 'Noumrou',
+    phone: 'Noumrouk',
     birthday: 'Nhar 3id miledek',
     optional: '(ken t7eb)',
     birthdayHint: 'Dabber cadeauwet fi chhar 3id miledek. Ma3loumetek yab9aw 3and KINZ.',
     birthdayPlaceholder: 'jj/mm/aaaa',
-    submit: 'A3mel carte mte3i',
+    submit: 'A3mel carte mte3ek',
     submitting: '9a3din na3mlou fil carte…',
   },
 
   strip: {
     label: 'Marahel el thnia',
-    caption: (stages: string) => `Mel 7abba lel karmous el dhahbi : ${stages}.`,
+    caption: (stages: string) => `Mel badhra lel karmous el dhahbi : ${stages}.`,
     stageAt: (name: string, level: number) => `${name} fil niveau ${level}`,
     short: {
-      1: '7abba',
+      1: 'Badhra',
       5: 'Nabta',
       8: 'Raquette',
       13: 'Nawwara',
@@ -121,7 +121,7 @@ export const tn = {
   },
 
   errors: {
-    INVALID_PHONE: 'Noumrou 8alet (8 ar9am tounsiya)',
+    INVALID_PHONE: 'Noumrouk 8alet (8 ar9am tounsiya)',
     PHONE_TAKEN: 'El noumrou hedha 3andou carte. Otlob mel comptoir yab3thoulek.',
     INVALID_ADDRESS: 'Adresse 8alta',
     NOT_FOUND: 'Client mouch mawjoud',
@@ -132,7 +132,7 @@ export const tn = {
   },
 
   titles: {
-    1: '7abba',
+    1: 'Badhra',
     5: 'Nabta',
     8: 'Raquette',
     13: 'Nawwara',
@@ -180,5 +180,5 @@ export const tn = {
     dormant: (a: ReminderArgs) =>
       `3aslema ${a.firstName}, twa7achnek ! El pépins mte3ek yestannewk 3and KINZ. El carte mte3ek : ${a.cardUrl}`,
   },
-  resend: (cardUrl: string) => `El carte el fidélité KINZ mte3ek : ${cardUrl}`,
+  resend: (cardUrl: string) => `Carte fidélité KINZ mte3ek : ${cardUrl}`,
 } satisfies Copy;

@@ -44,8 +44,12 @@ Level names come from `src/lib/copy/<code>.ts` `titles`; reuse them, never inven
 | your data stays               | Ma3loumetek yab9aw                                       | yob9aw, data mte3ek tab9a         |
 | multiply (pépins ×2)          | yetdha3fou                                               | yetdhar7ou, yzidou                |
 | a stamp per visit from 40 TND | Tampon kol marra tzourna ou techri b 40 TND walla akther | Tampon fi kol ziyara              |
+| loyalty card                  | Carte fidélité mte3ek                                    | Carte el fidélité                 |
+| create your card (button)     | A3mel carte mte3ek                                       | A3mel carte mte3i                 |
+| your number (phone field)     | Noumrouk                                                 | Noumrou                           |
+| seed (level 1)                | Badhra                                                   | 7abba                             |
 
-Level names in `tn`: 7abba (1), Nabta (5), Raquette (8), Nawwara (13), Karmousa (21), Chajrat el karmous (34), Ostourat el karmous el dhahbi (50). Never Nouwara, never the French name.
+Level names in `tn`: Badhra (1), Nabta (5), Raquette (8), Nawwara (13), Karmousa (21), Chajrat el karmous (34), Ostourat el karmous el dhahbi (50). Never Nouwara or 7abba, never the French name.
 
 ## Every string keeps
 

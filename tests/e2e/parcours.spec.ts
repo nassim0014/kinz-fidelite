@@ -129,9 +129,9 @@ test('un client choisit le tounsi avant de créer sa carte', async ({ page }) =>
   await page.getByRole('button', { name: 'Tounsi' }).click();
   await expect(page.getByLabel('Ismek')).toBeVisible();
   await page.getByLabel('Ismek').fill('Rima');
-  await page.getByLabel('Noumrou').fill('22 333 444');
+  await page.getByLabel('Noumrouk').fill('22 333 444');
   await page.getByLabel(/Nhar 3id miledek/).fill('14/03/1990');
-  await page.getByRole('button', { name: 'A3mel carte mte3i' }).click();
+  await page.getByRole('button', { name: 'A3mel carte mte3ek' }).click();
   await expect(page).toHaveURL(/\/c\/[A-Za-z0-9_-]{22}$/);
   await expect(page.getByRole('heading', { name: '3aslema Rima' })).toBeVisible();
 });
