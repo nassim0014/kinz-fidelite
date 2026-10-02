@@ -1,10 +1,12 @@
 import { and, eq } from 'drizzle-orm';
 import { describe, expect, it } from 'vitest';
+import { POST as reminderRoute } from '@/app/api/admin/reminders/route';
 import { customers, events } from '@/db/schema';
 import { businessDate } from '@/lib/dates';
 import { exportEventsCsv, listEvents } from '@/server/admin';
 import { listReminderCandidates, recordReminder } from '@/server/reminders';
 import { makeCustomer, makeStaff, testDb } from './helpers';
+import { cookieFor, req } from './http';
 
 const now = new Date('2026-10-02T10:00:00Z');
 const daysAgo = (n: number) => new Date(now.getTime() - n * 86_400_000);
@@ -89,5 +91,47 @@ describe('reminder candidates', () => {
     const [e] = await listEvents(testDb);
     expect(e).toMatchObject({ type: 'reminder_sent', customerName: 'Amira', detail: 'dormant' });
     expect(await exportEventsCsv(testDb)).toContain(';reminder_sent;Amira;');
+  });
+});
+
+describe('POST /api/admin/reminders', () => {
+  it('is reserved to owners', async () => {
+    const amel = await makeStaff('Amel', 'staff');
+    const c = await makeCustomer();
+    const res = await reminderRoute(
+      req('/api/admin/reminders', {
+        body: { customerId: c.id, reason: 'dormant' },
+        cookie: await cookieFor(amel),
+      }),
+    );
+    expect(res.status).toBe(403);
+  });
+
+  it('records once, then reports the reminder as already sent', async () => {
+    const owner = await makeStaff('Nassim', 'owner');
+    const c = await makeCustomer();
+    const call = async () =>
+      reminderRoute(
+        req('/api/admin/reminders', {
+          body: { customerId: c.id, reason: 'dormant' },
+          cookie: await cookieFor(owner),
+        }),
+      );
+    const first = await call();
+    expect(first.status).toBe(200);
+    expect(await first.json()).toEqual({ ok: true, recorded: true });
+    expect(await (await call()).json()).toEqual({ ok: true, recorded: false });
+  });
+
+  it('rejects an unknown reason', async () => {
+    const owner = await makeStaff('Nassim', 'owner');
+    const c = await makeCustomer();
+    const res = await reminderRoute(
+      req('/api/admin/reminders', {
+        body: { customerId: c.id, reason: 'autre' },
+        cookie: await cookieFor(owner),
+      }),
+    );
+    expect(res.status).toBe(400);
   });
 });

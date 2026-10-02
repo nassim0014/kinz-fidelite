@@ -1,11 +1,14 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { ReminderList } from '@/components/admin/ReminderList';
 import { StaffManager } from '@/components/admin/StaffManager';
 import { getDb } from '@/db/client';
 import { formatDateTime } from '@/lib/dates';
+import { env } from '@/lib/env';
 import { levelFromPepins, title } from '@/lib/rules';
 import { listEvents, listFiguiers } from '@/server/admin';
 import { getPageSession } from '@/server/page-session';
+import { listReminderCandidates } from '@/server/reminders';
 import { listStaff } from '@/server/staff';
 
 export const dynamic = 'force-dynamic';
@@ -23,10 +26,11 @@ export default async function AdminPage() {
   const session = await getPageSession('owner');
   if (!session) redirect('/staff/login');
   const db = getDb();
-  const [staffRows, figuiers, recent] = await Promise.all([
+  const [staffRows, figuiers, recent, toRemind] = await Promise.all([
     listStaff(db),
     listFiguiers(db),
     listEvents(db, 200),
+    listReminderCandidates(db),
   ]);
 
   return (
@@ -46,6 +50,11 @@ export default async function AdminPage() {
         staff={staffRows.map(({ id, name, role, active }) => ({ id, name, role, active }))}
         selfId={session.staffId}
       />
+
+      <section className="space-y-3">
+        <h2 className="font-display text-xl">À relancer ({toRemind.length})</h2>
+        <ReminderList appUrl={env().APP_URL} candidates={toRemind} />
+      </section>
 
       <section className="space-y-3">
         <h2 className="font-display text-xl">
