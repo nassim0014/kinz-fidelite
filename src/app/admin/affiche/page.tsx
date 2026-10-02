@@ -19,7 +19,7 @@ export default async function PosterPage() {
       <p className="text-lg text-ink">Scannez et créez votre carte en 30 secondes.</p>
       <ul className="space-y-1 text-sm text-ink">
         <li>1 tampon dès 40 TND d’achat, 2 dès 120 TND, 3 dès 300 TND</li>
-        <li>Des récompenses à 2, 3, 5, 7, 11, 13… à vous de deviner la suite</li>
+        <li>Des récompenses aux niveaux 2, 3, 5, 7, 11, 13… à vous de deviner la suite</li>
         <li>50 niveaux, et des pépins qui se multiplient en chemin</li>
       </ul>
       <RoadmapStrip className="mt-2 w-full" />

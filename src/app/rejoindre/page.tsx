@@ -6,7 +6,7 @@ export const metadata = { title: 'Rejoindre' };
 
 const PROMISES = [
   'Un tampon à chaque visite, dès 40 TND d’achat',
-  'Des récompenses à 2, 3, 5, 7, 11, 13… à vous de deviner la suite',
+  'Des récompenses aux niveaux 2, 3, 5, 7, 11, 13… à vous de deviner la suite',
 ];
 
 export default function JoinPage() {
