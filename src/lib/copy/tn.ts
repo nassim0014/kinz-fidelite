@@ -23,6 +23,7 @@ export const tn = {
     optional: '(ken t7eb)',
     birthdayHint: 'Dabber cadeauwet fi chhar 3id miledek. Ma3loumetek yab9aw 3and KINZ.',
     birthdayPlaceholder: 'jj/mm/aaaa',
+    pickDate: '5tar mel calendrier',
     submit: 'A3mel carte mte3ek',
     submitting: '9a3din na3mlou fil carte…',
   },

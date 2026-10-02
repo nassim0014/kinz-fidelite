@@ -40,6 +40,7 @@ export const ar = {
     optional: '(اختياري)',
     birthdayHint: 'يمنحك هدايا في شهر ميلادك. تبقى بياناتك لدى KINZ.',
     birthdayPlaceholder: 'يوم/شهر/سنة',
+    pickDate: 'اختر من التقويم',
     submit: 'أنشئ بطاقتي',
     submitting: 'جارٍ إنشاء البطاقة…',
   },

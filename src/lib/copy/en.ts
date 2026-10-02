@@ -22,6 +22,7 @@ export const en = {
     optional: '(optional)',
     birthdayHint: 'It unlocks gifts in your birthday month. Your details stay with KINZ.',
     birthdayPlaceholder: 'dd/mm/yyyy',
+    pickDate: 'Pick from the calendar',
     submit: 'Create my card',
     submitting: 'Creating your card…',
   },

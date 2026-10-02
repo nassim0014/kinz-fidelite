@@ -130,7 +130,10 @@ test('un client choisit le tounsi avant de créer sa carte', async ({ page }) =>
   await expect(page.getByLabel('Ismek')).toBeVisible();
   await page.getByLabel('Ismek').fill('Rima');
   await page.getByLabel('Noumrouk').fill('22 333 444');
-  await page.getByLabel(/Nhar 3id miledek/).fill('14/03/1990');
+  // The phone's numeric keypad has no "/": the field adds the slashes itself.
+  const birthday = page.getByLabel(/Nhar 3id miledek/);
+  await birthday.pressSequentially('14031990');
+  await expect(birthday).toHaveValue('14/03/1990');
   await page.getByRole('button', { name: 'A3mel carte mte3ek' }).click();
   await expect(page).toHaveURL(/\/c\/[A-Za-z0-9_-]{22}$/);
   await expect(page.getByRole('heading', { name: '3aslema Rima' })).toBeVisible();
@@ -157,4 +160,10 @@ test('la carte passe en arabe, de droite à gauche, et le reste sur un autre té
   await phone.goto(new URL(page.url()).pathname);
   await expect(phone.locator('main')).toHaveAttribute('dir', 'rtl');
   await other.close();
+});
+
+test("la date d'anniversaire se choisit aussi dans le calendrier", async ({ page }) => {
+  await page.goto('/rejoindre?nouveau=1');
+  await page.getByLabel('Choisir dans le calendrier').fill('1990-03-14');
+  await expect(page.getByLabel(/Date d’anniversaire/)).toHaveValue('14/03/1990');
 });
