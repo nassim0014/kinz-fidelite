@@ -39,6 +39,7 @@ export const ar = {
     birthday: 'تاريخ الميلاد',
     optional: '(اختياري)',
     birthdayHint: 'يمنحك هدايا في شهر ميلادك. تبقى بياناتك لدى KINZ.',
+    birthdayPlaceholder: 'يوم/شهر/سنة',
     submit: 'أنشئ بطاقتي',
     submitting: 'جارٍ إنشاء البطاقة…',
   },
@@ -143,6 +144,7 @@ export const ar = {
     NOT_FOUND: 'الحريف غير موجود',
     BAD_REQUEST: 'بيانات غير صالحة',
     NETWORK: 'تعذّر الاتصال. تحقّق من الشبكة وأعد المحاولة.',
+    INVALID_BIRTHDAY: 'تاريخ غير صالح (يوم/شهر/سنة)',
     UNKNOWN: 'حدث خطأ',
   },
 

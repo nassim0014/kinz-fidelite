@@ -21,6 +21,7 @@ export const en = {
     birthday: 'Birthday',
     optional: '(optional)',
     birthdayHint: 'It unlocks gifts in your birthday month. Your details stay with KINZ.',
+    birthdayPlaceholder: 'dd/mm/yyyy',
     submit: 'Create my card',
     submitting: 'Creating your card…',
   },
@@ -125,6 +126,7 @@ export const en = {
     NOT_FOUND: 'Customer not found',
     BAD_REQUEST: 'Invalid details',
     NETWORK: 'Cannot connect. Check your network and try again.',
+    INVALID_BIRTHDAY: 'Invalid date (dd/mm/yyyy)',
     UNKNOWN: 'Something went wrong',
   },
 

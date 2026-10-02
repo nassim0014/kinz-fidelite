@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { type FormEvent, useEffect, useState } from 'react';
 import { readStoredToken, storeToken } from '@/lib/card-storage';
 import { errorText, getCopy, type Locale } from '@/lib/copy';
+import { parseDayMonthYear } from '@/lib/dates';
 
 export function JoinForm({ locale }: { locale: Locale }) {
   const router = useRouter();
@@ -22,13 +23,18 @@ export function JoinForm({ locale }: { locale: Locale }) {
 
   async function submit(e: FormEvent) {
     e.preventDefault();
+    const birthdayIso = birthday.trim() ? parseDayMonthYear(birthday) : undefined;
+    if (birthdayIso === null) {
+      setError(copy.errors.INVALID_BIRTHDAY);
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
       const res = await fetch('/api/customers', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ firstName, phone, birthday: birthday || undefined, locale }),
+        body: JSON.stringify({ firstName, phone, birthday: birthdayIso, locale }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -85,7 +91,12 @@ export function JoinForm({ locale }: { locale: Locale }) {
         </label>
         <input
           id="birthday"
-          type="date"
+          type="text"
+          inputMode="numeric"
+          autoComplete="bday"
+          dir="ltr"
+          maxLength={10}
+          placeholder={t.birthdayPlaceholder}
           value={birthday}
           onChange={(e) => setBirthday(e.target.value)}
           className={input}

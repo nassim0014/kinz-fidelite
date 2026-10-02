@@ -24,6 +24,7 @@ export const fr = {
     optional: '(facultatif)',
     birthdayHint:
       'Elle débloque des cadeaux le mois de votre anniversaire. Vos données restent chez KINZ.',
+    birthdayPlaceholder: 'jj/mm/aaaa',
     submit: 'Créer ma carte',
     submitting: 'Création de la carte…',
   },
@@ -131,6 +132,7 @@ export const fr = {
     NOT_FOUND: 'Client introuvable',
     BAD_REQUEST: 'Données invalides',
     NETWORK: 'Connexion impossible. Vérifiez votre réseau et réessayez.',
+    INVALID_BIRTHDAY: 'Date invalide (jj/mm/aaaa)',
     UNKNOWN: 'Erreur',
   },
 
