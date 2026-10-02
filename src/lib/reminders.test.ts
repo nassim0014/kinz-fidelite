@@ -33,6 +33,17 @@ describe('reminderReason', () => {
     expect(reason({ birthday: '1990-10-20', lifetimePepins: 15 })).toBeNull();
   });
 
+  it('greets a birthday only once per month', () => {
+    const born = { birthday: '1990-10-20', lifetimePepins: 21 };
+    const later = new Date('2026-10-20T10:00:00Z');
+    const remindedOnFirst = new Date('2026-10-01T10:00:00Z');
+    expect(reminderReason({ ...base, ...born, lastReminderAt: remindedOnFirst }, later)).toBeNull();
+    const remindedLastMonth = new Date('2026-09-20T10:00:00Z');
+    expect(reminderReason({ ...base, ...born, lastReminderAt: remindedLastMonth }, later)).toBe(
+      'birthday_month',
+    );
+  });
+
   it('flags a customer away for 45 days', () => {
     expect(reason({ lastVisitAt: daysAgo(45) })).toBe('dormant');
   });
@@ -63,7 +74,7 @@ describe('reminderMessage', () => {
     expect(text).toContain('Salma');
     expect(text).toContain('−20 % sur 1 produit');
     expect(text).toContain('https://f.tn/c/x');
-    expect(text).not.toContain('—');
+    expect(text).not.toContain('\u2014');
   });
 
   it('names the next reward for a customer one stamp away', () => {

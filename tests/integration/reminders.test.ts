@@ -84,6 +84,22 @@ describe('reminder candidates', () => {
     expect(logged).toHaveLength(1);
   });
 
+  it('logs a single reminder when two requests arrive at the same time', async () => {
+    const s = await makeStaff('Nassim', 'owner');
+    // The race only shows up some of the time, so ten customers each get two requests at once.
+    const people = await Promise.all(
+      Array.from({ length: 10 }, () => makeCustomer({ cardStamps: 3 })),
+    );
+    await Promise.all(
+      people.flatMap((c) => {
+        const input = { customerId: c.id, reason: 'reward_waiting' as const, staffId: s.id, now };
+        return [recordReminder(testDb, input), recordReminder(testDb, input)];
+      }),
+    );
+    const logged = await testDb.select().from(events).where(eq(events.type, 'reminder_sent'));
+    expect(logged).toHaveLength(10);
+  });
+
   it('shows reminders in the admin journal and the CSV export', async () => {
     const s = await makeStaff('Nassim', 'owner');
     const c = await makeCustomer({ firstName: 'Amira' });

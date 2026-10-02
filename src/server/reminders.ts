@@ -3,6 +3,7 @@ import type { Db } from '@/db';
 import { customers, events } from '@/db/schema';
 import { businessDate } from '@/lib/dates';
 import { type ReminderReason, reminderReason } from '@/lib/reminders';
+import { AppError } from './errors';
 
 export interface ReminderCandidate {
   customerId: string;
@@ -68,6 +69,13 @@ export async function recordReminder(
 ): Promise<{ recorded: boolean }> {
   const now = input.now ?? new Date();
   return db.transaction(async (tx) => {
+    // Lock the customer row so two simultaneous clicks cannot both pass the check below.
+    const [customer] = await tx
+      .select({ id: customers.id })
+      .from(customers)
+      .where(eq(customers.id, input.customerId))
+      .for('update');
+    if (!customer) throw new AppError('NOT_FOUND');
     const recent = await tx
       .select({ id: events.id })
       .from(events)

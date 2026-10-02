@@ -13,7 +13,7 @@
 ## Global Constraints
 
 - Aucune nouvelle dépendance npm.
-- Textes en français. Aucun tiret cadratin (—) dans le code, les tests, les commits ou la PR.
+- Textes en français. Aucun tiret cadratin (U+2014) dans le code, les tests, les commits ou la PR.
 - Toute date « du jour » passe par `businessDate()` de `src/lib/dates.ts` (fuseau `Africa/Tunis`).
 - L'envoi n'est jamais automatique : on ouvre WhatsApp, une personne appuie sur Envoyer.
 - La liste et la route d'enregistrement sont réservées au rôle `owner` (`getPageSession('owner')` pour la page, `requireStaff(req, 'owner')` pour la route).
@@ -107,7 +107,7 @@ Un test par règle, avec une date fixe `now = new Date('2026-10-02T10:00:00Z')` 
 - `lastVisitAt: null` et `createdAt` à J-45 donne `'dormant'` (Review Focus 1).
 - Priorité : `cardStamps: 4` avec une visite à J-45 donne `'reward_waiting'` (3 est atteint), et non `'dormant'`.
 - Silence : n'importe quel cas ci-dessus avec `lastReminderAt` à J-13 donne `null` ; à J-14, la raison revient.
-- `reminderMessage('reward_waiting', { firstName: 'Salma', cardStamps: 3, cardUrl: 'https://f.tn/c/x' })` contient `'Salma'`, `'−20 % sur 1 produit'` et `'https://f.tn/c/x'`, et ne contient pas `'—'`.
+- `reminderMessage('reward_waiting', { firstName: 'Salma', cardStamps: 3, cardUrl: 'https://f.tn/c/x' })` contient `'Salma'`, `'−20 % sur 1 produit'` et `'https://f.tn/c/x'`, et ne contient pas de tiret cadratin (`'\u2014'`).
 
 - [ ] **Step 2: Run to verify they fail**
 

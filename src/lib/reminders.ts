@@ -1,5 +1,5 @@
 import { cardHint } from './card-hint';
-import { isBirthdayMonth } from './dates';
+import { businessDate, isBirthdayMonth } from './dates';
 import { levelFromPepins } from './rules';
 
 /** Why a customer is worth a WhatsApp nudge, most useful first. */
@@ -29,6 +29,10 @@ const BIRTHDAY_PERK_LEVEL = 7;
 
 const daysSince = (d: Date, now: Date) => Math.floor((now.getTime() - d.getTime()) / 86_400_000);
 
+/** One birthday greeting per month, even though the 14-day silence would allow a second one. */
+const remindedThisMonth = (at: Date | null, now: Date) =>
+  at !== null && businessDate(at).slice(0, 7) === businessDate(now).slice(0, 7);
+
 export function reminderReason(c: ReminderInput, now: Date = new Date()): ReminderReason | null {
   if (c.lastReminderAt && daysSince(c.lastReminderAt, now) < SILENCE_DAYS) return null;
   const away = daysSince(c.lastVisitAt ?? c.createdAt, now);
@@ -37,7 +41,8 @@ export function reminderReason(c: ReminderInput, now: Date = new Date()): Remind
   if (hint.next?.missing === 1 && away >= ONE_STAMP_AWAY_DAYS) return 'one_stamp_away';
   if (
     levelFromPepins(c.lifetimePepins) >= BIRTHDAY_PERK_LEVEL &&
-    isBirthdayMonth(c.birthday, now)
+    isBirthdayMonth(c.birthday, now) &&
+    !remindedThisMonth(c.lastReminderAt, now)
   ) {
     return 'birthday_month';
   }
