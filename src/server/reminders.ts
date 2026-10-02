@@ -91,3 +91,45 @@ export async function recordReminder(
     return { recorded: true };
   });
 }
+
+/** Share of customers who came back, and reminders followed by a visit within 14 days (last 90 days). */
+export async function returnStats(
+  db: Db,
+  now: Date = new Date(),
+): Promise<{
+  customers: number;
+  returning: number;
+  reminders90d: number;
+  remindersFollowed: number;
+}> {
+  const since = new Date(now.getTime() - 90 * 86_400_000);
+  const [visits] = await db.execute<{ customers: number; returning: number }>(sql`
+    select
+      (select count(*) from ${customers})::int as customers,
+      (select count(*) from (
+        select ${events.customerId} from ${events}
+        where ${events.type} = 'stamp'
+        group by ${events.customerId} having count(*) >= 2
+      ) r)::int as returning
+  `);
+  const [reminders] = await db.execute<{ reminders90d: number; remindersFollowed: number }>(sql`
+    select
+      count(*)::int as "reminders90d",
+      count(*) filter (where exists (
+        select 1 from ${events} v
+        where v.customer_id = r.customer_id and v.type = 'stamp'
+          and v.created_at > r.created_at
+          and v.created_at <= r.created_at + interval '14 days'
+      ))::int as "remindersFollowed"
+    from ${events} r
+    where r.type = 'reminder_sent'
+      and r.created_at >= ${since.toISOString()}::timestamptz
+      and r.created_at <= ${now.toISOString()}::timestamptz
+  `);
+  return {
+    customers: visits!.customers,
+    returning: visits!.returning,
+    reminders90d: reminders!.reminders90d,
+    remindersFollowed: reminders!.remindersFollowed,
+  };
+}

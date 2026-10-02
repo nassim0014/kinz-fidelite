@@ -4,7 +4,7 @@ import { POST as reminderRoute } from '@/app/api/admin/reminders/route';
 import { customers, events } from '@/db/schema';
 import { businessDate } from '@/lib/dates';
 import { exportEventsCsv, listEvents } from '@/server/admin';
-import { listReminderCandidates, recordReminder } from '@/server/reminders';
+import { listReminderCandidates, recordReminder, returnStats } from '@/server/reminders';
 import { makeCustomer, makeStaff, testDb } from './helpers';
 import { cookieFor, req } from './http';
 
@@ -133,5 +133,30 @@ describe('POST /api/admin/reminders', () => {
       }),
     );
     expect(res.status).toBe(400);
+  });
+});
+
+describe('returnStats', () => {
+  it('counts returning customers and reminders followed by a visit', async () => {
+    const s = await makeStaff('Nassim', 'owner');
+    const a = await makeCustomer({ firstName: 'A' });
+    const b = await makeCustomer({ firstName: 'B' });
+    const c = await makeCustomer({ firstName: 'C' });
+    await visit(a.id, s.id, daysAgo(20));
+    await visit(a.id, s.id, daysAgo(3));
+    await visit(b.id, s.id, daysAgo(3));
+    await recordReminder(testDb, {
+      customerId: c.id,
+      reason: 'dormant',
+      staffId: s.id,
+      now: daysAgo(10),
+    });
+    await visit(c.id, s.id, daysAgo(5));
+    expect(await returnStats(testDb, now)).toEqual({
+      customers: 3,
+      returning: 1,
+      reminders90d: 1,
+      remindersFollowed: 1,
+    });
   });
 });

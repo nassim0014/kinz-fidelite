@@ -8,7 +8,7 @@ import { env } from '@/lib/env';
 import { levelFromPepins, title } from '@/lib/rules';
 import { listEvents, listFiguiers } from '@/server/admin';
 import { getPageSession } from '@/server/page-session';
-import { listReminderCandidates } from '@/server/reminders';
+import { listReminderCandidates, returnStats } from '@/server/reminders';
 import { listStaff } from '@/server/staff';
 
 export const dynamic = 'force-dynamic';
@@ -26,12 +26,14 @@ export default async function AdminPage() {
   const session = await getPageSession('owner');
   if (!session) redirect('/staff/login');
   const db = getDb();
-  const [staffRows, figuiers, recent, toRemind] = await Promise.all([
+  const [staffRows, figuiers, recent, toRemind, stats] = await Promise.all([
     listStaff(db),
     listFiguiers(db),
     listEvents(db, 200),
     listReminderCandidates(db),
+    returnStats(db),
   ]);
+  const pct = (part: number, whole: number) => (whole ? Math.round((part / whole) * 100) : 0);
 
   return (
     <main className="mx-auto max-w-5xl space-y-8 px-4 py-6">
@@ -45,6 +47,18 @@ export default async function AdminPage() {
           <a href="/api/admin/export?type=events">Export journal (CSV)</a>
         </nav>
       </header>
+
+      <section className="space-y-1 rounded-2xl bg-white p-4 text-sm">
+        <h2 className="font-display text-xl">Retours en boutique</h2>
+        <p>
+          {stats.returning} clients sur {stats.customers} sont revenus au moins une fois (
+          {pct(stats.returning, stats.customers)} %).
+        </p>
+        <p>
+          {stats.remindersFollowed} relances sur {stats.reminders90d} ont été suivies d’une visite
+          dans les 14 jours (90 derniers jours).
+        </p>
+      </section>
 
       <StaffManager
         staff={staffRows.map(({ id, name, role, active }) => ({ id, name, role, active }))}
