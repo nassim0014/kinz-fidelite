@@ -11,25 +11,25 @@ KINZ is a prickly-pear and fig oil boutique in Tunis. Its customer screens speak
 
 ## Output contract, per language
 
-| Code | Script | Address | Shape |
-|---|---|---|---|
-| `fr` | Latin | vous, warm | Reference text. Never change its meaning when translating. |
-| `tn` | **Arabizi**: Latin letters + digits | tu (inti) | Tunis derja as typed on WhatsApp, French loanwords kept in French spelling. |
-| `en` | Latin | you, warm, plain | Short sentences, no idioms. |
-| `ar` | Arabic | أنتم/أنت, simple | Modern Standard Arabic, friendly, never administrative. |
+| Code | Script                              | Address          | Shape                                                                       |
+| ---- | ----------------------------------- | ---------------- | --------------------------------------------------------------------------- |
+| `fr` | Latin                               | vous, warm       | Reference text. Never change its meaning when translating.                  |
+| `tn` | **Arabizi**: Latin letters + digits | tu (inti)        | Tunis derja as typed on WhatsApp, French loanwords kept in French spelling. |
+| `en` | Latin                               | you, warm, plain | Short sentences, no idioms.                                                 |
+| `ar` | Arabic                              | أنتم/أنت, simple | Modern Standard Arabic, friendly, never administrative.                     |
 
 Arabizi digits for `tn`: 3 = ع, 7 = ح, 9 = ق, 5 = خ, 8 = غ, 2 = ء. Example: "3aslema Salma, ba9i tampon wa7ed bech te5ou −20 % 3la produit."
 
 ## Locked terms (same in every language unless the table says otherwise)
 
-| Term | fr | tn | en | ar |
-|---|---|---|---|---|
-| Brand | KINZ | KINZ | KINZ | KINZ |
-| Stamp | tampon(s) | tampon(s) | stamp(s) | طابع / طوابع |
-| Points | pépins | pépins | seeds (pépins) | بذور |
-| Card | carte | carte | card | بطاقة |
-| Money | 40 TND | 40 TND | 40 TND | 40 TND |
-| Discount | −20 % | −20 % | −20% | −20% |
+| Term     | fr        | tn        | en             | ar           |
+| -------- | --------- | --------- | -------------- | ------------ |
+| Brand    | KINZ      | KINZ      | KINZ           | KINZ         |
+| Stamp    | tampon(s) | tampon(s) | stamp(s)       | طابع / طوابع |
+| Points   | pépins    | pépins    | seeds (pépins) | بذور         |
+| Card     | carte     | carte     | card           | بطاقة        |
+| Money    | 40 TND    | 40 TND    | 40 TND         | 40 TND       |
+| Discount | −20 %     | −20 %     | −20%           | −20%         |
 
 Level names come from `src/lib/copy/<code>.ts` `titles`; reuse them, never invent new ones.
 
@@ -49,11 +49,11 @@ Known limits: `lahja`'s `check_output.py` reads Arabic script only, so check Ara
 
 ## Common mistakes
 
-| Mistake | Fix |
-|---|---|
-| `tn` written in Arabic script | Rewrite in Arabizi. |
-| "pépins" translated as oil, fruit or زيت | Use the locked term. |
-| Levantine or MSA forms in `tn` (صار، سوف، عيد ميلاد سعيد) | Tunisian forms: `walla`, `bech`, `3id miled mabrouk`. |
-| Persian letters (پ، ڤ) or French accents dropped in loanwords | Keep the French spelling: produit, carte, tampon. |
-| `q`, `kh`, `gh`, `'` for ق خ غ ء in `tn` (waqt, khir) | Digits, every time: wa9t, 5ir, 8ali, so2al. |
-| Em dash (U+2014) | Comma or colon. |
+| Mistake                                                       | Fix                                                   |
+| ------------------------------------------------------------- | ----------------------------------------------------- |
+| `tn` written in Arabic script                                 | Rewrite in Arabizi.                                   |
+| "pépins" translated as oil, fruit or زيت                      | Use the locked term.                                  |
+| Levantine or MSA forms in `tn` (صار، سوف، عيد ميلاد سعيد)     | Tunisian forms: `walla`, `bech`, `3id miled mabrouk`. |
+| Persian letters (پ، ڤ) or French accents dropped in loanwords | Keep the French spelling: produit, carte, tampon.     |
+| `q`, `kh`, `gh`, `'` for ق خ غ ء in `tn` (waqt, khir)         | Digits, every time: wa9t, 5ir, 8ali, so2al.           |
+| Em dash (U+2014)                                              | Comma or colon.                                       |
