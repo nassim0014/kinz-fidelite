@@ -73,7 +73,7 @@ export const tn = {
   },
 
   perksList: {
-    heading: 'El avantages mte3i',
+    heading: 'Les avantages mte3i',
     none: 'Awel avantage mte3ek, échantillon bienvenue, yji fil niveau el jey.',
     levelShort: (n: number) => `Niv. ${n}`,
     levelLong: (n: number) => `Niveau ${n}`,
@@ -81,7 +81,7 @@ export const tn = {
   },
 
   how: {
-    heading: 'Kifech temchi ?',
+    heading: 'Kifech lehkeya ?',
     items: [
       {
         term: 'El tampons',

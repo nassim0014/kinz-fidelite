@@ -37,18 +37,20 @@ Level names come from `src/lib/copy/<code>.ts` `titles`; reuse them, never inven
 
 ## `tn` forms validated by Nassim (use them as written)
 
-| Meaning                       | Use                                                      | Not                               |
-| ----------------------------- | -------------------------------------------------------- | --------------------------------- |
-| (optional)                    | (ken t7eb)                                               | (ki t7eb), (optionnel)            |
-| it unlocks gifts              | Dabber cadeauwet                                         | Y7allek cadeauwet, tfatah cadeaux |
-| your data stays               | Ma3loumetek yab9aw                                       | yob9aw, data mte3ek tab9a         |
-| multiply (pépins ×2)          | yetdha3fou                                               | yetdhar7ou, yzidou                |
-| a stamp per visit from 40 TND | Tampon kol marra tzourna ou techri b 40 TND walla akther | Tampon fi kol ziyara              |
-| loyalty card                  | Carte fidélité mte3ek                                    | Carte el fidélité                 |
-| create your card (button)     | A3mel carte mte3ek                                       | A3mel carte mte3i                 |
-| your number (phone field)     | Noumrouk                                                 | Noumrou                           |
-| seed (level 1)                | Badhra                                                   | 7abba                             |
-| 8 Tunisian digits             | 8 nwemer twensa                                          | 8 ar9am tounsiya                  |
+| Meaning                                   | Use                                                      | Not                               |
+| ----------------------------------------- | -------------------------------------------------------- | --------------------------------- |
+| (optional)                                | (ken t7eb)                                               | (ki t7eb), (optionnel)            |
+| it unlocks gifts                          | Dabber cadeauwet                                         | Y7allek cadeauwet, tfatah cadeaux |
+| your data stays                           | Ma3loumetek yab9aw                                       | yob9aw, data mte3ek tab9a         |
+| multiply (pépins ×2)                      | yetdha3fou                                               | yetdhar7ou, yzidou                |
+| a stamp per visit from 40 TND             | Tampon kol marra tzourna ou techri b 40 TND walla akther | Tampon fi kol ziyara              |
+| loyalty card                              | Carte fidélité mte3ek                                    | Carte el fidélité                 |
+| create your card (button)                 | A3mel carte mte3ek                                       | A3mel carte mte3i                 |
+| your number (phone field)                 | Noumrouk                                                 | Noumrou                           |
+| seed (level 1)                            | Badhra                                                   | 7abba                             |
+| 8 Tunisian digits                         | 8 nwemer twensa                                          | 8 ar9am tounsiya                  |
+| "How does it work?" (rules section title) | Kifech lehkeya ?                                         | Kifech temchi ?                   |
+| "My perks" (perks list title)             | Les avantages mte3i                                      | El avantages mte3i                |
 
 Level names in `tn`: Badhra (1), Nabta (5), Raquette (8), Nawwara (13), Karmousa (21), Chajrat el karmous (34), Ostourat el karmous el dhahbi (50). Never Nouwara or 7abba, never the French name.
 
