@@ -34,7 +34,7 @@ export function LoyaltyCard({
     >
       <div className="flex items-center justify-between">
         <KinzLogo className="h-6 w-auto" />
-        <p className="font-display text-lg">
+        <p dir="ltr" className="font-display text-lg">
           {`${cardStamps} / ${CARD_MAX}`}
           <span className="sr-only">{t.stampsSr}</span>
         </p>

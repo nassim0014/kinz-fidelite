@@ -30,6 +30,7 @@ export function RoadmapStrip({ copy, className = '' }: { copy: Copy; className?:
                 </span>
                 {/* Every stage keeps room for a badge so names line up across the row. */}
                 <span
+                  dir="ltr"
                   aria-hidden={!s.boost}
                   className={[
                     'mt-0.5 rounded-full bg-forest px-1.5 text-[0.6rem] font-bold text-lime',

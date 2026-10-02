@@ -69,6 +69,7 @@ export function JoinForm({ locale }: { locale: Locale }) {
         <input
           id="phone"
           type="tel"
+          dir="ltr"
           inputMode="tel"
           required
           autoComplete="tel"
