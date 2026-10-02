@@ -35,6 +35,18 @@ Level names come from `src/lib/copy/<code>.ts` `titles`; reuse them, never inven
 
 "Pépins" are loyalty points (fruit seeds), never the oil, never the fruit.
 
+## `tn` forms validated by Nassim (use them as written)
+
+| Meaning                       | Use                                                      | Not                               |
+| ----------------------------- | -------------------------------------------------------- | --------------------------------- |
+| (optional)                    | (ken t7eb)                                               | (ki t7eb), (optionnel)            |
+| it unlocks gifts              | Dabber cadeauwet                                         | Y7allek cadeauwet, tfatah cadeaux |
+| your data stays               | Ma3loumetek yab9aw                                       | yob9aw, data mte3ek tab9a         |
+| multiply (pépins ×2)          | yetdha3fou                                               | yetdhar7ou, yzidou                |
+| a stamp per visit from 40 TND | Tampon kol marra tzourna ou techri b 40 TND walla akther | Tampon fi kol ziyara              |
+
+Level names in `tn`: 7abba (1), Nabta (5), Raquette (8), Nawwara (13), Karmousa (21), Chajrat el karmous (34), Ostourat el karmous el dhahbi (50). Never Nouwara, never the French name.
+
 ## Every string keeps
 
 - Placeholders and values exactly: first name, numbers, URLs, `${…}` expressions.
