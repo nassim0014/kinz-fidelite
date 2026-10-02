@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { type FormEvent, useEffect, useState } from 'react';
 import { readStoredToken, storeToken } from '@/lib/card-storage';
 import { errorText, getCopy, type Locale } from '@/lib/copy';
-import { parseDayMonthYear } from '@/lib/dates';
+import { formatDateTyping, isoToDayMonthYear, parseDayMonthYear } from '@/lib/dates';
 
 export function JoinForm({ locale }: { locale: Locale }) {
   const router = useRouter();
@@ -89,18 +89,44 @@ export function JoinForm({ locale }: { locale: Locale }) {
         <label htmlFor="birthday" className="block text-sm font-bold text-forest">
           {t.birthday} <span className="font-normal text-muted">{t.optional}</span>
         </label>
-        <input
-          id="birthday"
-          type="text"
-          inputMode="numeric"
-          autoComplete="bday"
-          dir="ltr"
-          maxLength={10}
-          placeholder={t.birthdayPlaceholder}
-          value={birthday}
-          onChange={(e) => setBirthday(e.target.value)}
-          className={input}
-        />
+        {/* Dates read left to right in every language, so the whole control does too. */}
+        <div dir="ltr" className="relative">
+          <input
+            id="birthday"
+            type="text"
+            inputMode="numeric"
+            autoComplete="bday"
+            maxLength={10}
+            placeholder={t.birthdayPlaceholder}
+            value={birthday}
+            onChange={(e) => setBirthday(formatDateTyping(e.target.value))}
+            className={`${input} pe-14`}
+          />
+          {/* The phone's own calendar, laid invisibly over the icon: tapping the icon opens it. */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-y-0 end-0 mt-1 flex w-12 items-center justify-center text-forest"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="size-6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+            >
+              <rect x="3.5" y="5" width="17" height="15" rx="2.5" />
+              <path d="M3.5 10h17M8 3v4M16 3v4" strokeLinecap="round" />
+            </svg>
+          </span>
+          <input
+            type="date"
+            aria-label={t.pickDate}
+            min="1900-01-01"
+            max={new Date().toISOString().slice(0, 10)}
+            onChange={(e) => setBirthday(isoToDayMonthYear(e.target.value))}
+            className="absolute inset-y-0 end-0 mt-1 w-12 cursor-pointer opacity-0"
+          />
+        </div>
         <p className="mt-1 text-xs text-muted">{t.birthdayHint}</p>
       </div>
       {error && (

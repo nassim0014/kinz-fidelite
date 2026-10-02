@@ -27,6 +27,18 @@ export function isBirthdayMonth(birthday: string | null, now: Date = new Date())
   return birthday.slice(5, 7) === businessDate(now).slice(5, 7);
 }
 
+/** Formats digits as dd/mm/yyyy while typing, so a numeric keypad without "/" is enough. */
+export function formatDateTyping(raw: string): string {
+  const d = raw.replace(/\D/g, '').slice(0, 8);
+  return [d.slice(0, 2), d.slice(2, 4), d.slice(4)].filter(Boolean).join('/');
+}
+
+/** YYYY-MM-DD (from the native calendar) to dd/mm/yyyy. */
+export function isoToDayMonthYear(iso: string): string {
+  const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return m ? `${m[3]}/${m[2]}/${m[1]}` : '';
+}
+
 /** Reads a date typed as dd/mm/yyyy (also with - or .) into YYYY-MM-DD, or null if impossible. */
 export function parseDayMonthYear(input: string): string | null {
   const m = input.trim().match(/^(\d{1,2})[/.-](\d{1,2})[/.-](\d{4})$/);

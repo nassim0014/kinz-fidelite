@@ -25,6 +25,7 @@ export const fr = {
     birthdayHint:
       'Elle débloque des cadeaux le mois de votre anniversaire. Vos données restent chez KINZ.',
     birthdayPlaceholder: 'jj/mm/aaaa',
+    pickDate: 'Choisir dans le calendrier',
     submit: 'Créer ma carte',
     submitting: 'Création de la carte…',
   },
