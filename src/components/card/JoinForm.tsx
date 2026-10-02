@@ -3,9 +3,13 @@
 import { useRouter } from 'next/navigation';
 import { type FormEvent, useEffect, useState } from 'react';
 import { readStoredToken, storeToken } from '@/lib/card-storage';
+import { errorText, getCopy, type Locale } from '@/lib/copy';
+import { parseDayMonthYear } from '@/lib/dates';
 
-export function JoinForm() {
+export function JoinForm({ locale }: { locale: Locale }) {
   const router = useRouter();
+  const copy = getCopy(locale);
+  const t = copy.join;
   const [firstName, setFirstName] = useState('');
   const [phone, setPhone] = useState('');
   const [birthday, setBirthday] = useState('');
@@ -19,23 +23,28 @@ export function JoinForm() {
 
   async function submit(e: FormEvent) {
     e.preventDefault();
+    const birthdayIso = birthday.trim() ? parseDayMonthYear(birthday) : undefined;
+    if (birthdayIso === null) {
+      setError(copy.errors.INVALID_BIRTHDAY);
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
       const res = await fetch('/api/customers', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ firstName, phone, birthday: birthday || undefined }),
+        body: JSON.stringify({ firstName, phone, birthday: birthdayIso, locale }),
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error ?? 'Erreur');
+        setError(errorText(copy, data.code));
         return;
       }
       storeToken(data.token);
       router.push(`/c/${data.token}`);
     } catch {
-      setError('Connexion impossible. Vérifiez votre réseau et réessayez.');
+      setError(copy.errors.NETWORK);
     } finally {
       setBusy(false);
     }
@@ -47,7 +56,7 @@ export function JoinForm() {
     <form onSubmit={submit} className="space-y-4">
       <div>
         <label htmlFor="firstName" className="block text-sm font-bold text-forest">
-          Prénom
+          {t.firstName}
         </label>
         <input
           id="firstName"
@@ -61,11 +70,12 @@ export function JoinForm() {
       </div>
       <div>
         <label htmlFor="phone" className="block text-sm font-bold text-forest">
-          Téléphone
+          {t.phone}
         </label>
         <input
           id="phone"
           type="tel"
+          dir="ltr"
           inputMode="tel"
           required
           autoComplete="tel"
@@ -77,18 +87,21 @@ export function JoinForm() {
       </div>
       <div>
         <label htmlFor="birthday" className="block text-sm font-bold text-forest">
-          Date d’anniversaire <span className="font-normal text-muted">(facultatif)</span>
+          {t.birthday} <span className="font-normal text-muted">{t.optional}</span>
         </label>
         <input
           id="birthday"
-          type="date"
+          type="text"
+          inputMode="numeric"
+          autoComplete="bday"
+          dir="ltr"
+          maxLength={10}
+          placeholder={t.birthdayPlaceholder}
           value={birthday}
           onChange={(e) => setBirthday(e.target.value)}
           className={input}
         />
-        <p className="mt-1 text-xs text-muted">
-          Elle débloque des cadeaux le mois de votre anniversaire. Vos données restent chez KINZ.
-        </p>
+        <p className="mt-1 text-xs text-muted">{t.birthdayHint}</p>
       </div>
       {error && (
         <p role="alert" className="text-sm text-red-800">
@@ -99,7 +112,7 @@ export function JoinForm() {
         disabled={busy}
         className="w-full rounded-full bg-forest py-3.5 font-bold text-lime disabled:opacity-50"
       >
-        {busy ? 'Création de la carte…' : 'Créer ma carte'}
+        {busy ? t.submitting : t.submit}
       </button>
     </form>
   );

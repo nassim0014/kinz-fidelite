@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { z } from 'zod';
 import { getDb } from '@/db/client';
+import { LOCALES } from '@/lib/copy/locale';
 import { isValidBirthday } from '@/lib/dates';
 import { createCustomer } from '@/server/customers';
 import { jsonError } from '@/server/http';
@@ -12,6 +13,7 @@ const Body = z.object({
     .string()
     .refine((v) => isValidBirthday(v))
     .optional(),
+  locale: z.enum(LOCALES).optional(),
 });
 
 export async function POST(req: NextRequest) {

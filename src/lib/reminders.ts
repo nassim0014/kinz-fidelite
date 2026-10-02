@@ -1,4 +1,5 @@
 import { cardHint } from './card-hint';
+import { getCopy, type Locale } from './copy';
 import { businessDate, isBirthdayMonth } from './dates';
 import { levelFromPepins } from './rules';
 
@@ -53,16 +54,14 @@ export function reminderReason(c: ReminderInput, now: Date = new Date()): Remind
 export function reminderMessage(
   reason: ReminderReason,
   c: { firstName: string; cardStamps: number; cardUrl: string },
+  locale: Locale = 'fr',
 ): string {
+  const copy = getCopy(locale);
   const hint = cardHint(c.cardStamps);
-  switch (reason) {
-    case 'reward_waiting':
-      return `Bonjour ${c.firstName}, votre récompense KINZ vous attend : ${hint.available?.label}. Passez la récupérer en boutique. Votre carte : ${c.cardUrl}`;
-    case 'one_stamp_away':
-      return `Bonjour ${c.firstName}, plus qu’un tampon avant ${hint.next?.stop.label} sur votre carte KINZ. À bientôt en boutique ! ${c.cardUrl}`;
-    case 'birthday_month':
-      return `Joyeux mois d’anniversaire ${c.firstName} ! Profitez de −20 % chez KINZ tout ce mois-ci. Votre carte : ${c.cardUrl}`;
-    case 'dormant':
-      return `Bonjour ${c.firstName}, ça fait un moment ! Vos pépins vous attendent chez KINZ. Votre carte : ${c.cardUrl}`;
-  }
+  return copy.reminders[reason]({
+    firstName: c.firstName,
+    cardUrl: c.cardUrl,
+    reward: hint.available ? copy.stops[hint.available.stamps] : undefined,
+    next: hint.next ? copy.stops[hint.next.stop.stamps] : undefined,
+  });
 }

@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { businessDate, isBirthday, isBirthdayMonth, isValidBirthday } from './dates';
+import {
+  businessDate,
+  isBirthday,
+  isBirthdayMonth,
+  isValidBirthday,
+  parseDayMonthYear,
+} from './dates';
 
 describe('businessDate (Africa/Tunis, UTC+1)', () => {
   it('rolls over at Tunis midnight, not UTC midnight', () => {
@@ -42,5 +48,18 @@ describe('isBirthdayMonth', () => {
     expect(isBirthdayMonth('1990-03-14', new Date('2026-02-28T23:30:00Z'))).toBe(true);
     expect(isBirthdayMonth('1990-03-14', new Date('2026-04-01T10:00:00Z'))).toBe(false);
     expect(isBirthdayMonth(null)).toBe(false);
+  });
+});
+
+describe('parseDayMonthYear', () => {
+  it('reads dd/mm/yyyy, the way dates are written in Tunisia', () => {
+    expect(parseDayMonthYear('14/03/1990')).toBe('1990-03-14');
+    expect(parseDayMonthYear('1/3/1990')).toBe('1990-03-01');
+    expect(parseDayMonthYear('14-03-1990')).toBe('1990-03-14');
+    expect(parseDayMonthYear(' 14.03.1990 ')).toBe('1990-03-14');
+  });
+  it('refuses impossible or partial dates', () => {
+    for (const bad of ['31/02/1990', '14/13/1990', '03/14', '1990-03-14', 'abc', ''])
+      expect(parseDayMonthYear(bad)).toBeNull();
   });
 });

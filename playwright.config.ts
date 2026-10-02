@@ -10,7 +10,8 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : 'list',
   use: { baseURL: 'http://localhost:3100', trace: 'retain-on-failure' },
-  projects: [{ name: 'mobile', use: { ...devices['Pixel 7'] } }],
+  // The tests read French labels; the phone's language would otherwise pick the page language.
+  projects: [{ name: 'mobile', use: { ...devices['Pixel 7'], locale: 'fr-FR' } }],
   webServer: {
     command: 'npm run build && npx next start -p 3100',
     url: 'http://localhost:3100/rejoindre',

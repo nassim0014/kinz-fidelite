@@ -1,4 +1,5 @@
 import type { Customer } from '@/db/schema';
+import type { Locale } from './copy/locale';
 import { isBirthday, isBirthdayMonth } from './dates';
 import {
   CARD_MAX,
@@ -33,6 +34,7 @@ export interface CardView {
 export interface StaffCustomerView {
   customerId: string;
   phone: string;
+  locale: Locale;
   card: CardView;
   stampedToday: boolean;
   givablePerks: Perk[];

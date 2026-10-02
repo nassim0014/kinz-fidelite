@@ -1,23 +1,29 @@
+import type { Metadata } from 'next';
 import { KinzLogo } from '@/components/brand/KinzLogo';
 import { JoinForm } from '@/components/card/JoinForm';
+import { LocaleSwitcher } from '@/components/LocaleSwitcher';
 import { RoadmapStrip } from '@/components/roadmap/RoadmapStrip';
+import { getCopy, LOCALE_DIR, LOCALE_LANG } from '@/lib/copy';
+import { visitorLocale } from '@/server/locale';
 
-export const metadata = { title: 'Rejoindre' };
+export async function generateMetadata(): Promise<Metadata> {
+  return { title: getCopy(await visitorLocale()).meta.join };
+}
 
-const PROMISES = [
-  'Un tampon à chaque visite, dès 40 TND d’achat',
-  'Des récompenses aux niveaux 2, 3, 5, 7, 11, 13… à vous de deviner la suite',
-];
-
-export default function JoinPage() {
+export default async function JoinPage() {
+  const locale = await visitorLocale();
+  const copy = getCopy(locale);
   return (
-    <main className="mx-auto max-w-md px-4 pt-8 pb-12">
-      <KinzLogo variant="full" className="mx-auto h-28 w-auto text-forest" />
-      <h1 className="mt-7 font-display text-3xl leading-tight text-forest">
-        Votre carte de fidélité, dans votre téléphone
-      </h1>
+    <main
+      lang={LOCALE_LANG[locale]}
+      dir={LOCALE_DIR[locale]}
+      className="mx-auto max-w-md px-4 pt-4 pb-12"
+    >
+      <LocaleSwitcher current={locale} />
+      <KinzLogo variant="full" className="mx-auto mt-4 h-28 w-auto text-forest" />
+      <h1 className="mt-7 font-display text-3xl leading-tight text-forest">{copy.join.heading}</h1>
       <ul className="mt-4 space-y-2.5">
-        {PROMISES.map((p) => (
+        {copy.join.promises.map((p) => (
           <li key={p} className="flex items-start gap-3 text-[0.95rem]">
             <span
               aria-hidden
@@ -29,12 +35,12 @@ export default function JoinPage() {
       </ul>
       <section aria-labelledby="parcours" className="mt-6">
         <h2 id="parcours" className="text-[0.95rem]">
-          50 niveaux, et des pépins qui se multiplient en chemin :
+          {copy.join.journey}
         </h2>
-        <RoadmapStrip className="mt-2 -mx-1" />
+        <RoadmapStrip copy={copy} className="mt-2 -mx-1" />
       </section>
       <div className="mt-7 rounded-3xl bg-white p-5">
-        <JoinForm />
+        <JoinForm locale={locale} />
       </div>
     </main>
   );

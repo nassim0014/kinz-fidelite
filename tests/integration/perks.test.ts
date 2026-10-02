@@ -1,4 +1,6 @@
+import { eq } from 'drizzle-orm';
 import { describe, expect, it } from 'vitest';
+import { customers } from '@/db/schema';
 import { getStaffView, givablePerks, givePerk } from '@/server/perks';
 import { stamp } from '@/server/stamping';
 import { makeCustomer, makeStaff, testDb } from './helpers';
@@ -53,5 +55,14 @@ describe('getStaffView', () => {
     await stamp(testDb, { customerId: c.id, amountTnd: 50, staffId: s.id, now: NOW });
     const v = await getStaffView(testDb, c, NOW);
     expect(v).toMatchObject({ customerId: c.id, phone: c.phone, stampedToday: true });
+  });
+});
+
+describe('getStaffView language', () => {
+  it("shows the counter the customer's language", async () => {
+    const c = await makeCustomer();
+    await testDb.update(customers).set({ locale: 'tn' }).where(eq(customers.id, c.id));
+    const [fresh] = await testDb.select().from(customers).where(eq(customers.id, c.id));
+    expect((await getStaffView(testDb, fresh!)).locale).toBe('tn');
   });
 });

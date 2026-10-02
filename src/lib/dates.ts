@@ -27,6 +27,15 @@ export function isBirthdayMonth(birthday: string | null, now: Date = new Date())
   return birthday.slice(5, 7) === businessDate(now).slice(5, 7);
 }
 
+/** Reads a date typed as dd/mm/yyyy (also with - or .) into YYYY-MM-DD, or null if impossible. */
+export function parseDayMonthYear(input: string): string | null {
+  const m = input.trim().match(/^(\d{1,2})[/.-](\d{1,2})[/.-](\d{4})$/);
+  if (!m) return null;
+  const iso = `${m[3]}-${m[2]!.padStart(2, '0')}-${m[1]!.padStart(2, '0')}`;
+  const date = new Date(`${iso}T00:00:00Z`);
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === iso ? iso : null;
+}
+
 export function isValidBirthday(value: string, now: Date = new Date()): boolean {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   const date = new Date(`${value}T00:00:00Z`);

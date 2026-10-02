@@ -3,6 +3,7 @@
 import { type FormEvent, useState } from 'react';
 import { StampTrack } from '@/components/card/StampTrack';
 import { parseAmount } from '@/lib/amount';
+import { getCopy } from '@/lib/copy';
 import type { StaffCustomerView } from '@/lib/views';
 import { smsLink, waLink } from '@/lib/whatsapp';
 
@@ -37,12 +38,20 @@ export function CustomerPanel({ appUrl, view, busy, onStamp, onRedeem, onPerk, o
     if (await onStamp(amount)) setAmount('');
   }
 
-  const resendMessage = `Votre carte de fidélité KINZ : ${appUrl}/c/${card.token}`;
+  const resendMessage = getCopy(view.locale).resend(`${appUrl}/c/${card.token}`);
   const btn = 'rounded-full px-5 py-3 font-bold disabled:opacity-50';
   return (
     <div className="space-y-4">
       <header className="rounded-2xl bg-forest p-4 text-white">
-        <h2 className="font-display text-2xl">{card.firstName}</h2>
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="font-display text-2xl">{card.firstName}</h2>
+          <span
+            className="rounded-full bg-lime px-2 py-0.5 text-xs font-bold text-forest"
+            title="Langue du client"
+          >
+            {view.locale.toUpperCase()}
+          </span>
+        </div>
         <p className="text-sm text-lime">
           {view.phone} · Niveau {card.level}, {card.title} · ×{card.multiplier}
         </p>

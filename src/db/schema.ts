@@ -12,7 +12,9 @@ import {
   uniqueIndex,
   uuid,
 } from 'drizzle-orm/pg-core';
+import { LOCALES } from '../lib/copy/locale';
 
+export const localeEnum = pgEnum('locale', LOCALES);
 export const staffRole = pgEnum('staff_role', ['staff', 'owner']);
 export const eventType = pgEnum('event_type', [
   'stamp',
@@ -40,6 +42,7 @@ export const customers = pgTable('customers', {
   address: text('address'),
   cardStamps: integer('card_stamps').notNull().default(0),
   lifetimePepins: integer('lifetime_pepins').notNull().default(0),
+  locale: localeEnum('locale').notNull().default('fr'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 });
 

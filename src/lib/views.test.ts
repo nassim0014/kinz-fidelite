@@ -11,6 +11,7 @@ const base: Customer = {
   address: null,
   cardStamps: 6,
   lifetimePepins: 80,
+  locale: 'fr',
   createdAt: new Date('2026-09-30T10:00:00Z'),
 };
 
