@@ -2,6 +2,7 @@ import { randomBytes } from 'node:crypto';
 import { eq } from 'drizzle-orm';
 import type { Db, DbOrTx } from '@/db';
 import { customers, type Customer } from '@/db/schema';
+import type { Locale } from '@/lib/copy/locale';
 import { normalizeTunisianPhone } from '@/lib/phone';
 import { levelFromPepins } from '@/lib/rules';
 import { isCardToken } from '@/lib/token';
@@ -11,7 +12,7 @@ export const newCardToken = (): string => randomBytes(16).toString('base64url');
 
 export async function createCustomer(
   db: Db,
-  input: { firstName: string; phone: string; birthday?: string | null },
+  input: { firstName: string; phone: string; birthday?: string | null; locale?: Locale },
 ): Promise<{ token: string }> {
   const phone = normalizeTunisianPhone(input.phone);
   if (!phone) throw new AppError('INVALID_PHONE');
@@ -22,6 +23,7 @@ export async function createCustomer(
       firstName: input.firstName.trim(),
       phone,
       birthday: input.birthday ?? null,
+      locale: input.locale ?? 'fr',
     });
   } catch (e) {
     if (isUniqueViolation(e)) throw new AppError('PHONE_TAKEN');
@@ -50,4 +52,10 @@ export async function setAddress(db: Db, token: string, address: string): Promis
   const clean = address.trim();
   if (clean.length < 5 || clean.length > 300) throw new AppError('INVALID_ADDRESS');
   await db.update(customers).set({ address: clean }).where(eq(customers.id, customer.id));
+}
+
+export async function setLocale(db: Db, token: string, locale: Locale): Promise<void> {
+  const customer = await getCustomerByToken(db, token);
+  if (!customer) throw new AppError('NOT_FOUND');
+  await db.update(customers).set({ locale }).where(eq(customers.id, customer.id));
 }
