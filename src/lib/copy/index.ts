@@ -1,11 +1,14 @@
 import { buildRoadmap } from '../roadmap';
+import { ar } from './ar';
+import { en } from './en';
 import { type Copy, fr } from './fr';
 import type { Locale } from './locale';
+import { tn } from './tn';
 
 export type { Copy } from './fr';
 export * from './locale';
 
-const DICTIONARIES: Record<Locale, Copy> = { fr, tn: fr, en: fr, ar: fr };
+const DICTIONARIES: Record<Locale, Copy> = { fr, tn, en, ar };
 
 export function getCopy(locale: Locale): Copy {
   return DICTIONARIES[locale];
