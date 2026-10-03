@@ -54,8 +54,8 @@ export const tn = {
       `Tampon ${n}${got ? ', 5dhitou' : ''}${reward ? ', fih cadeau' : ''}`,
     available: '{reward} tnajem te5dhou fil comptoir.',
     full: 'El carte 3ammret. Ste3mel el cadeau mte3ek fil ziyara el jeya.',
-    next: (n: number) => `Ba9ilek ${n} ${stamps(n)} w te5ou {reward}.`,
-    orContinue: (n: number) => `Wala kammel : ba9ilek ${n} ${stamps(n)} w te5ou {reward}.`,
+    next: (n: number) => `93adlek ${n} ${stamps(n)} ou tekhou {reward}.`,
+    orContinue: (n: number) => `Wala kammel : 93adlek ${n} ${stamps(n)} ou tekhou {reward}.`,
     allRewards: 'El cadeauwet el kol mta3 el carte',
     finePrint:
       'Ki testa3mel cadeau, el carte tarja3 lel sfer. Ken el produits bel wa7ed (mouch packs, trios, duos, collections w coffrets). El produit el mahdi ma yfoutch 49 TND.',
@@ -68,8 +68,9 @@ export const tn = {
     boost: (x: number) => `Pépins ×${x}`,
     progressLabel: 'Ta9addom lel niveau el jey',
     progress: (total: number, missing: number, next: number) =>
-      `${total} ${pepins(total)} el kol. Ba9ilek ${missing} ${pepins(missing)} 9bal el niveau ${next}.`,
-    max: (total: number) => `${total} pépins el kol. Wsolt lel niveau el a5ir : inti Ostoura.`,
+      `${total} ${pepins(total)} el kol fel kol. 93adlek ${missing} ${pepins(missing)} 9bal el niveau ${next}.`,
+    max: (total: number) =>
+      `${total} pépins el kol fel kol. Wsolt lel niveau el a5ir : inti Ostoura.`,
   },
 
   perksList: {
@@ -89,7 +90,7 @@ export const tn = {
       },
       {
         term: 'El cadeauwet',
-        text: 'Fil carte, fi 3, 5, 7, 11 w 13 tampons. Ste3mel wa7ed tawa, wala stanna elli ba3dou, a7sen. W famma cadeauwet o5rin fil niveaux.',
+        text: 'Fil carte, fi 3, 5, 7, 11 w 13 tampons. Ste3mel wa7ed tawa, wala stanna elli ba3dou, a7sen. W famma cadeauwet o5rin fil les niveaux elli mbaad.',
       },
       {
         term: 'El pépins',
@@ -143,9 +144,9 @@ export const tn = {
   },
 
   stops: {
-    3: '−20 % 3la produit',
-    5: '−50 % 3la produit',
-    7: '−50 % 3la 2 produits',
+    3: '−20 % 3ala produit',
+    5: '−50 % 3ala produit',
+    7: '−50 % 3ala 2 produits',
     11: 'Produit hdiya (≤ 49 TND) + 11 pépins',
     13: 'Produit hdiya (≤ 49 TND) + −50 % 3al theni + 13 pépins',
   },
@@ -175,7 +176,7 @@ export const tn = {
     reward_waiting: (a: ReminderArgs) =>
       `3aslema ${a.firstName}, el cadeau mte3ek 3and KINZ yestannek : ${a.reward}. 3addi 5oudhou fil boutique. El carte mte3ek : ${a.cardUrl}`,
     one_stamp_away: (a: ReminderArgs) =>
-      `3aslema ${a.firstName}, ba9ilek tampon wa7ed w te5ou ${a.next} 3al carte KINZ mte3ek. Netlaw9aw fil boutique ! ${a.cardUrl}`,
+      `3aslema ${a.firstName}, 93adlek tampon wa7ed ou tekhou ${a.next} 3al carte KINZ mte3ek. Netlaw9aw fil boutique ! ${a.cardUrl}`,
     birthday_month: (a: ReminderArgs) =>
       `3id miled mabrouk ${a.firstName} ! −20 % 3and KINZ chhar el kol. El carte mte3ek : ${a.cardUrl}`,
     dormant: (a: ReminderArgs) =>

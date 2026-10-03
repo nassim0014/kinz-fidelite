@@ -15,11 +15,15 @@ it('uses the six Arabic plural forms', () => {
   ]);
 });
 
-it('treats 0 as singular in French and Tounsi', () => {
-  for (const l of ['fr', 'tn'] as const) {
-    expect(plural(l, 0, { one: 'a', other: 'b' })).toBe('a');
-    expect(plural(l, 2, { one: 'a', other: 'b' })).toBe('b');
-  }
+it('treats 0 as singular in French only', () => {
+  expect(plural('fr', 0, { one: 'a', other: 'b' })).toBe('a');
+  expect(plural('fr', 2, { one: 'a', other: 'b' })).toBe('b');
+});
+
+it('says "0 pépins" in Tounsi, like Nassim writes it', () => {
+  expect(plural('tn', 0, { one: 'pépin', other: 'pépins' })).toBe('pépins');
+  expect(plural('tn', 1, { one: 'pépin', other: 'pépins' })).toBe('pépin');
+  expect(plural('tn', 2, { one: 'pépin', other: 'pépins' })).toBe('pépins');
 });
 
 it('falls back to the other form when one is missing', () => {
