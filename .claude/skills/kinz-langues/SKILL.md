@@ -51,6 +51,11 @@ Level names come from `src/lib/copy/<code>.ts` `titles`; reuse them, never inven
 | 8 Tunisian digits                         | 8 nwemer twensa                                          | 8 ar9am tounsiya                  |
 | "How does it work?" (rules section title) | Kifech lehkeya ?                                         | Kifech temchi ?                   |
 | "My perks" (perks list title)             | Les avantages mte3i                                      | El avantages mte3i                |
+| "N more stamps for …"                     | 93adlek N tampons ou tekhou …                            | Ba9ilek N tampons w te5ou …       |
+| "N more pépins before level X"            | 93adlek N pépins 9bal el niveau X                        | Ba9ilek N pépins …                |
+| "N pépins in total"                       | N pépins el kol fel kol (0 pépins, plural)               | N pépins el kol, 0 pépin          |
+| "on (a product)"                          | 3ala produit                                             | 3la produit                       |
+| "more gifts in the next levels"           | cadeauwet o5rin fil les niveaux elli mbaad               | cadeauwet o5rin fil niveaux       |
 
 Level names in `tn`: Badhra (1), Nabta (5), Raquette (8), Nawwara (13), Karmousa (21), Chajrat el karmous (34), Ostourat el karmous el dhahbi (50). Never Nouwara or 7abba, never the French name.
 
@@ -68,11 +73,11 @@ Known limits: `lahja`'s `check_output.py` reads Arabic script only, so check Ara
 
 ## Common mistakes
 
-| Mistake                                                       | Fix                                                   |
-| ------------------------------------------------------------- | ----------------------------------------------------- |
-| `tn` written in Arabic script                                 | Rewrite in Arabizi.                                   |
-| "pépins" translated as oil, fruit or زيت                      | Use the locked term.                                  |
-| Levantine or MSA forms in `tn` (صار، سوف، عيد ميلاد سعيد)     | Tunisian forms: `walla`, `bech`, `3id miled mabrouk`. |
-| Persian letters (پ، ڤ) or French accents dropped in loanwords | Keep the French spelling: produit, carte, tampon.     |
-| `q`, `kh`, `gh`, `'` for ق خ غ ء in `tn` (waqt, khir)         | Digits, every time: wa9t, 5ir, 8ali, so2al.           |
-| Em dash (U+2014)                                              | Comma or colon.                                       |
+| Mistake                                                                   | Fix                                                                |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `tn` written in Arabic script                                             | Rewrite in Arabizi.                                                |
+| "pépins" translated as oil, fruit or زيت                                  | Use the locked term.                                               |
+| Levantine or MSA forms in `tn` (صار، سوف، عيد ميلاد سعيد)                 | Tunisian forms: `walla`, `bech`, `3id miled mabrouk`.              |
+| Persian letters (پ، ڤ) or French accents dropped in loanwords             | Keep the French spelling: produit, carte, tampon.                  |
+| `q`, `gh`, `'` for ق غ ء in `tn` (waqt), or `kh` except Nassim's "tekhou" | Digits: wa9t, 5ir, 8ali, so2al. Keep "tekhou" as Nassim writes it. |
+| Em dash (U+2014)                                                          | Comma or colon.                                                    |
